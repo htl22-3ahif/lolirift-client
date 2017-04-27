@@ -1,7 +1,10 @@
 import { combineReducers } from 'redux'
+import players from './player'
+import units from './unit'
 
-const loliriftApp = combineReducers({
-  // something here
+const world = combineReducers({
+  players,
+  units
 })
 
-export default loliriftApp
+export default world

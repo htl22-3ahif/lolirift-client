@@ -9,9 +9,9 @@
   },
   "keywords": [
     "Electron",
-    "Math"
+    "RTS"
   ],
-  "author": "Ugi",
+  "author": "satorialist",
   "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.24.0",

@@ -39,6 +39,7 @@ export default class CoordinateSystem extends React.Component {
     ctx.fillStyle = '#eceff1'
     ctx.fillRect(0, 0, this.state.width, this.state.height)
 
+    /*
     // drawing x line
     if (this.state.origin.y > 0 && this.state.origin.y < this.state.height) {
       ctx.beginPath()
@@ -54,16 +55,17 @@ export default class CoordinateSystem extends React.Component {
       ctx.lineTo(this.state.origin.x, this.state.height)
       ctx.stroke()
     }
+    */
 
-    // draw separators on x
+    // draw gridlines on x
     {
       var num = Math.floor(this.state.origin.x / this.state.stride.x)
       var offset = this.state.origin.x - (this.state.stride.x * num)
 
       for (var i = offset; i < this.state.width; i += this.state.stride.x) {
         ctx.beginPath()
-        ctx.moveTo(i, this.state.origin.y + 5)
-        ctx.lineTo(i, this.state.origin.y - 5)
+        ctx.moveTo(i, 0)
+        ctx.lineTo(i, this.state.height)
         ctx.stroke()
       }
 
@@ -83,15 +85,15 @@ export default class CoordinateSystem extends React.Component {
     }*/
     }
 
-    // draw separators on y
+    // draw gridlines on y
     {
       var num = Math.floor(this.state.origin.y / this.state.stride.y)
       var offset = this.state.origin.y - (this.state.stride.y * num)
 
       for (var i = offset; i < this.state.height; i += this.state.stride.y) {
         ctx.beginPath()
-        ctx.moveTo(this.state.origin.x + 5, i)
-        ctx.lineTo(this.state.origin.x - 5, i)
+        ctx.moveTo(0, i)
+        ctx.lineTo(this.state.width, i)
         ctx.stroke()
       }
     }
