@@ -3,7 +3,7 @@ import CoordinateSystem from '../components/CoordinateSystem'
 
 const mapStateToProps = (state) => {
   return {
-    points: state.points
+    units: state.units
   }
 }
 

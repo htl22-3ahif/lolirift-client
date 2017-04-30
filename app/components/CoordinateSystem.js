@@ -1,8 +1,9 @@
 import React, { PropTypes } from 'react'
+import AddPlayerContainer from '../containers/AddPlayerContainer'
 
 export default class CoordinateSystem extends React.Component {
 
-  static propTypes = {
+  static propTypes = {}/*
     points: PropTypes.arrayOf(
       PropTypes.shape({
         name: PropTypes.string.isRequired,
@@ -10,7 +11,7 @@ export default class CoordinateSystem extends React.Component {
         y: PropTypes.number.isRequired
       }).isRequired
     ).isRequired
-  }
+  }*/
 
   constructor () {
     super()
@@ -167,6 +168,7 @@ export default class CoordinateSystem extends React.Component {
         >
           Canvas is not supported
         </canvas>
+        <AddPlayerContainer />
       </div>
     )
   }
