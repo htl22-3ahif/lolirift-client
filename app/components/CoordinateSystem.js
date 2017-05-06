@@ -19,7 +19,6 @@ export default class CoordinateSystem extends React.Component {
       width: window.innerWidth,
       height: window.innerHeight,
       origin: { x: window.innerWidth / 2, y: window.innerHeight / 2 },
-      pageOrigin: { x: window.innerWidth / 2, y: window.innerHeight / 2 },
       move: false,
       oldMouse: { x: 0, y: 0 },
       stride: { x: 50, y: 50 },
@@ -87,7 +86,7 @@ export default class CoordinateSystem extends React.Component {
       }
     }
 
-    // write currently selected grid element
+    // write some information on the screen
     {
       ctx.fillStyle = '#404040'
       ctx.fillText("mouse pos: " + this.state.oldMouse.x + ", " + this.state.oldMouse.y, 10, 10)
@@ -112,11 +111,13 @@ export default class CoordinateSystem extends React.Component {
   }
 
   onClick = (e) => {
-    var offsetX = Math.abs(this.state.pageOrigin.x - e.pageX)
+    /* old, useless crap
+
+    var offsetX = ((this.state.width / 2) - e.pageX) * -1
     //var gridX = ((this.state.origin.x + offsetX) % this.state.stride.x) + 1
     var selectedGridX = Math.floor((this.state.origin.x + offsetX) / this.state.stride.x)
 
-    var offsetY = Math.abs(this.state.pageOrigin.y - e.pageY)
+    var offsetY = ((this.state.height / 2) - e.pageY) * -1
     //var gridY = ((this.state.origin.y + offsetY) % this.state.stride.y) + 1
     var selectedGridY = Math.floor((this.state.origin.y + offsetY) / this.state.stride.y)
 
@@ -124,6 +125,37 @@ export default class CoordinateSystem extends React.Component {
       selectedGrid: {
         x: selectedGridX,
         y: selectedGridY
+      }
+    })*/
+
+    // TODO: fix small error, which seems to always be a third of a grid element
+    // shifted to the bottom right
+
+    // get the offset the grid has to the edge of the screen (relevant for pageX)
+    var offsetX = this.state.origin.x % this.state.stride.x
+    // transform mouse coords into a value in [- width/2, with/2], which
+    // is necessary in order to apply the pageX to our origin value
+    var offsettedPageX = e.pageX + offsetX - (this.state.width / 2)
+    // finally, calculate the selected spot on the grid
+    // floor the result to get an integer
+    var gridX = Math.floor(
+      // take the position and divide by our stride value to get xth grid element
+      // our pageX offset is negated in order to make pageX "flow" with the rate
+      // of change of our origin, as further down means a decreasing value, which
+      // is not the case with page values
+      ((offsettedPageX * -1) + this.state.origin.x) / this.state.stride.x
+    )
+
+    var offsetY = this.state.origin.y % this.state.stride.y
+    var offsettedPageY = e.pageY + offsetY - (this.state.height / 2)
+    var gridY = Math.floor(
+      ((offsettedPageY * -1) + this.state.origin.y) / this.state.stride.y
+    )
+
+    this.setState({
+      selectedGrid: {
+        x: gridX,
+        y: gridY
       }
     })
   }
