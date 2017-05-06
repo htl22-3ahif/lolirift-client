@@ -23,7 +23,8 @@ export default class CoordinateSystem extends React.Component {
       move: false,
       oldMouse: { x: 0, y: 0 },
       stride: { x: 50, y: 50 },
-      selectedGrid: { x: 0, y: 0 }
+      selectedGrid: { x: 0, y: 0 },
+      rate: 1
     }
 
     window.onresize = this.onResize.bind(this)
@@ -112,12 +113,12 @@ export default class CoordinateSystem extends React.Component {
 
   onClick = (e) => {
     var offsetX = Math.abs(this.state.pageOrigin.x - e.pageX)
-    var gridX = ((this.state.origin.x + offsetX) % this.state.stride.x) + 1
-    var selectedGridX = Math.floor((this.state.origin.x + offsetX - gridX) / this.state.stride.x)
+    //var gridX = ((this.state.origin.x + offsetX) % this.state.stride.x) + 1
+    var selectedGridX = Math.floor((this.state.origin.x + offsetX) / this.state.stride.x)
 
     var offsetY = Math.abs(this.state.pageOrigin.y - e.pageY)
-    var gridY = ((this.state.origin.y + offsetY) % this.state.stride.y) + 1
-    var selectedGridY = Math.floor((this.state.origin.y + offsetY - gridY) / this.state.stride.y)
+    //var gridY = ((this.state.origin.y + offsetY) % this.state.stride.y) + 1
+    var selectedGridY = Math.floor((this.state.origin.y + offsetY) / this.state.stride.y)
 
     this.setState({
       selectedGrid: {
@@ -163,6 +164,23 @@ export default class CoordinateSystem extends React.Component {
     }
   }
 
+  // scrolling will change stride size (and therefore scale the grid)
+  onWheel = (e) => {
+    /*const ctx = this.refs.canvas.getContext('2d')
+    ctx.fillStyle = '#404040'
+    ctx.fillText("delta mode: " + e.deltaMode, 10, 65)
+    ctx.fillText("deltaX: " + e.deltaX, 10, 80)
+    ctx.fillText("deltaY: " + e.deltaY, 10, 95)
+    ctx.fillText("deltaZ: " + e.deltaZ, 10, 110)*/
+
+    this.setState({
+      stride: {
+        x: this.state.stride.x + (e.deltaY / 10 * -1 * this.state.rate),
+        y: this.state.stride.y + (e.deltaY / 10 * -1 * this.state.rate)
+      }
+    })
+  }
+
   render () {
     console.log('render');
     console.log(this.props);
@@ -175,6 +193,7 @@ export default class CoordinateSystem extends React.Component {
         onMouseMove={this.onMouseMove.bind(this)}
         onClick={this.onClick.bind(this)}
         onDoubleClick={this.onDoubleClick.bind(this)}
+        onWheel={this.onWheel.bind(this)}
 
         style={styles}
       >
@@ -186,7 +205,6 @@ export default class CoordinateSystem extends React.Component {
         >
           Canvas is not supported
         </canvas>
-        <AddPlayerContainer />
       </div>
     )
   }
