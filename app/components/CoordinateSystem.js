@@ -18,10 +18,12 @@ export default class CoordinateSystem extends React.Component {
     this.state = {
       width: window.innerWidth,
       height: window.innerHeight,
-      origin: { x: window.innerWidth / 2, y: window.innerHeight / 2},
+      origin: { x: window.innerWidth / 2, y: window.innerHeight / 2 },
+      pageOrigin: { x: window.innerWidth / 2, y: window.innerHeight / 2 },
       move: false,
       oldMouse: { x: 0, y: 0 },
-      stride: { x: 50, y: 50 }
+      stride: { x: 50, y: 50 },
+      selectedGrid: { x: 0, y: 0 }
     }
 
     window.onresize = this.onResize.bind(this)
@@ -69,21 +71,6 @@ export default class CoordinateSystem extends React.Component {
         ctx.lineTo(i, this.state.height)
         ctx.stroke()
       }
-
-      // draw points
-      /*{
-        for (var i = 0; i < this.props.points.length; i++) {
-          ctx.beginPath()
-          ctx.arc(
-            (this.props.points[i].x * this.state.stride.x) + this.state.origin.x,
-            (-this.props.points[i].y * this.state.stride.y) + this.state.origin.y,
-            3, 0, 2* Math.PI, false
-          )
-          ctx.fillStyle = '#000000'
-          ctx.fill()
-          ctx.stroke()
-        }
-    }*/
     }
 
     // draw gridlines on y
@@ -97,6 +84,14 @@ export default class CoordinateSystem extends React.Component {
         ctx.lineTo(this.state.width, i)
         ctx.stroke()
       }
+    }
+
+    // write currently selected grid element
+    {
+      ctx.fillStyle = '#404040'
+      ctx.fillText("mouse pos: " + this.state.oldMouse.x + ", " + this.state.oldMouse.y, 10, 10)
+      ctx.fillText("origin: " + this.state.origin.x + ", " + this.state.origin.y, 10, 25)
+      ctx.fillText("selected grid element: " + this.state.selectedGrid.x + ", " + this.state.selectedGrid.y, 10, 40)
     }
   }
 
@@ -113,6 +108,27 @@ export default class CoordinateSystem extends React.Component {
       width: window.innerWidth,
       height: window.innerHeight
     })
+  }
+
+  onClick = (e) => {
+    var offsetX = Math.abs(this.state.pageOrigin.x - e.pageX)
+    var gridX = ((this.state.origin.x + offsetX) % this.state.stride.x) + 1
+    var selectedGridX = Math.floor((this.state.origin.x + offsetX - gridX) / this.state.stride.x)
+
+    var offsetY = Math.abs(this.state.pageOrigin.y - e.pageY)
+    var gridY = ((this.state.origin.y + offsetY) % this.state.stride.y) + 1
+    var selectedGridY = Math.floor((this.state.origin.y + offsetY - gridY) / this.state.stride.y)
+
+    this.setState({
+      selectedGrid: {
+        x: selectedGridX,
+        y: selectedGridY
+      }
+    })
+  }
+
+  onDoubleClick = (e) => {
+    this.onClick(e)
   }
 
   onMouseDown = (e) => {
@@ -157,6 +173,8 @@ export default class CoordinateSystem extends React.Component {
         onMouseDown={this.onMouseDown.bind(this)}
         onMouseUp={this.onMouseUp.bind(this)}
         onMouseMove={this.onMouseMove.bind(this)}
+        onClick={this.onClick.bind(this)}
+        onDoubleClick={this.onDoubleClick.bind(this)}
 
         style={styles}
       >
