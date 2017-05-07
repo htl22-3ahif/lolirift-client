@@ -21,7 +21,7 @@ export default class CoordinateSystem extends React.Component {
       origin: { x: window.innerWidth / 2, y: window.innerHeight / 2 },
       move: false,
       oldMouse: { x: 0, y: 0 },
-      stride: { x: 50, y: 50 },
+      stride: { x: 40, y: 40 },
       selectedGrid: { x: 0, y: 0 },
       rate: 1
     }
@@ -86,6 +86,30 @@ export default class CoordinateSystem extends React.Component {
       }
     }
 
+    // code for draw tile, inserted here for testing
+    {
+      ctx.fillStyle = '#0080ff'
+
+      // basically, undo the calculations made in onClick (where the selected grid
+      // element is claculated)
+      var offsetX = this.state.origin.x % this.state.stride.x
+      var originX = Math.floor(this.state.origin.x / this.state.stride.x) - 1
+      var offsettedPageX = (this.state.selectedGrid.x - originX) * this.state.stride.x
+      offsettedPageX = (offsettedPageX + (this.state.width / 2))
+      offsettedPageX = this.state.width - offsettedPageX
+
+      var offsetY = this.state.origin.y % this.state.stride.y
+      var originY = Math.floor(this.state.origin.y / this.state.stride.y) - 1
+      var offsettedPageY = (this.state.selectedGrid.y - originY) * this.state.stride.y
+      offsettedPageY = (offsettedPageY + (this.state.height / 2))
+      offsettedPageY = this.state.height - offsettedPageY
+
+      ctx.fillRect(offsettedPageX, offsettedPageY, this.state.stride.x, this.state.stride.y)
+
+      ctx.fillText("tiles: " + this.state.selectedGrid.x + ", " + this.state.selectedGrid.y, 10, 95)
+      ctx.fillText("offseted page: " + offsettedPageX + ", " + offsettedPageY, 10, 110)
+    }
+
     // write some information on the screen
     {
       ctx.fillStyle = '#404040'
@@ -108,6 +132,27 @@ export default class CoordinateSystem extends React.Component {
       width: window.innerWidth,
       height: window.innerHeight
     })
+  }
+
+  drawTile (tileX, tileY, color = '#404040') {
+    /*
+    const ctx = this.refs.canvas.getContext('2d')
+    ctx.fillStyle = color
+
+    var offsetX = this.state.origin.x % this.state.stride.x
+    var originX = Math.floor(this.state.origin.x / this.state.stride.x)
+    var offsettedPageX = (tileX - originX) * this.state.stride.x
+    offsettedPageX = (offsettedPageX + (this.state.width / 2) - offsetX)
+    offsettedPageX = this.state.width - offsettedPageX
+
+    var offsetY = this.state.origin.y % this.state.stride.y
+    var originY = Math.floor(this.state.origin.y / this.state.stride.y)
+    var offsettedPageY = (tileY - originY) * this.state.stride.y
+    offsettedPageY = (offsettedPageY + (this.state.height / 2) - offsetY)
+    offsettedPageY = this.state.height - offsettedPageY
+
+    ctx.fillRect(offsettedPageX, offsettedPageY, this.state.stride.x, this.state.stride.y)
+    */
   }
 
   onClick = (e) => {
@@ -151,6 +196,8 @@ export default class CoordinateSystem extends React.Component {
     var gridY = Math.floor(
       ((offsettedPageY * -1) + this.state.origin.y) / this.state.stride.y
     )
+
+    this.drawTile(gridX, gridY, '#0080ff')
 
     this.setState({
       selectedGrid: {
@@ -198,12 +245,22 @@ export default class CoordinateSystem extends React.Component {
 
   // scrolling will change stride size (and therefore scale the grid)
   onWheel = (e) => {
-    /*const ctx = this.refs.canvas.getContext('2d')
-    ctx.fillStyle = '#404040'
-    ctx.fillText("delta mode: " + e.deltaMode, 10, 65)
-    ctx.fillText("deltaX: " + e.deltaX, 10, 80)
-    ctx.fillText("deltaY: " + e.deltaY, 10, 95)
-    ctx.fillText("deltaZ: " + e.deltaZ, 10, 110)*/
+    // using a logistic growth function, the rate of change will decrease the closer
+    // it is to its boundaries (K = 100, y0 = 0)
+    // k = 10, K = 100, y0 = 0
+    /* var k = 10
+    var K = 100
+    var y0 = 0
+    var t = (this.state.stride.x + this.state.stride.y) / 2 */
+    // restricted growth function
+    //var growth = K + (y0 - K) * Math.pow(Math.E, -(k / K) * t)
+    // derivative of our restricted growth function
+    //var derivative = k * (1 - (growth / K)) dis not work
+
+    //logistic growth function
+    //var growth = (y0 * K) / (y0 + (K - y0) * Math.pow(Math.E, -k * t))
+    //derivative
+    //var derivative = k * growth * (1 - (growth / K)) dis not work either
 
     this.setState({
       stride: {
