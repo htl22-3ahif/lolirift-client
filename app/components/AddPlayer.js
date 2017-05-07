@@ -22,7 +22,7 @@ export default class AddPlayer extends React.Component {
 getPaperStyles () {
   return {
     position: 'absolute',
-    right: 30,
+    left: 30,
     bottom: 30,
     width: 'auto',
     height: 'auto',

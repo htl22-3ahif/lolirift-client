@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react'
-import AddPlayerContainer from '../containers/AddPlayerContainer'
 
 export default class CoordinateSystem extends React.Component {
 
@@ -18,7 +17,7 @@ export default class CoordinateSystem extends React.Component {
     this.state = {
       width: window.innerWidth,
       height: window.innerHeight,
-      origin: { x: window.innerWidth / 2, y: window.innerHeight / 2 },
+      origin: { x: 0, y: 0 },
       move: false,
       oldMouse: { x: 0, y: 0 },
       stride: { x: 40, y: 40 },
@@ -93,16 +92,14 @@ export default class CoordinateSystem extends React.Component {
       // basically, undo the calculations made in onClick (where the selected grid
       // element is claculated)
       var offsetX = this.state.origin.x % this.state.stride.x
-      var originX = Math.floor(this.state.origin.x / this.state.stride.x) - 1
+      var originX = Math.floor(this.state.origin.x / this.state.stride.x)
       var offsettedPageX = (this.state.selectedGrid.x - originX) * this.state.stride.x
-      offsettedPageX = (offsettedPageX + (this.state.width / 2))
-      offsettedPageX = this.state.width - offsettedPageX
+      offsettedPageX = offsettedPageX - offsetX
 
       var offsetY = this.state.origin.y % this.state.stride.y
-      var originY = Math.floor(this.state.origin.y / this.state.stride.y) - 1
+      var originY = Math.floor(this.state.origin.y / this.state.stride.y)
       var offsettedPageY = (this.state.selectedGrid.y - originY) * this.state.stride.y
-      offsettedPageY = (offsettedPageY + (this.state.height / 2))
-      offsettedPageY = this.state.height - offsettedPageY
+      offsettedPageY = offsettedPageY - offsetY
 
       ctx.fillRect(offsettedPageX, offsettedPageY, this.state.stride.x, this.state.stride.y)
 
@@ -135,52 +132,26 @@ export default class CoordinateSystem extends React.Component {
   }
 
   drawTile (tileX, tileY, color = '#404040') {
-    /*
     const ctx = this.refs.canvas.getContext('2d')
     ctx.fillStyle = color
 
     var offsetX = this.state.origin.x % this.state.stride.x
     var originX = Math.floor(this.state.origin.x / this.state.stride.x)
     var offsettedPageX = (tileX - originX) * this.state.stride.x
-    offsettedPageX = (offsettedPageX + (this.state.width / 2) - offsetX)
-    offsettedPageX = this.state.width - offsettedPageX
+    offsettedPageX = this.state.width - offsettedPageX - offsetX
 
     var offsetY = this.state.origin.y % this.state.stride.y
     var originY = Math.floor(this.state.origin.y / this.state.stride.y)
     var offsettedPageY = (tileY - originY) * this.state.stride.y
-    offsettedPageY = (offsettedPageY + (this.state.height / 2) - offsetY)
-    offsettedPageY = this.state.height - offsettedPageY
+    offsettedPageY = this.state.height - offsettedPageY - offsetY
 
     ctx.fillRect(offsettedPageX, offsettedPageY, this.state.stride.x, this.state.stride.y)
-    */
   }
 
   onClick = (e) => {
-    /* old, useless crap
-
-    var offsetX = ((this.state.width / 2) - e.pageX) * -1
-    //var gridX = ((this.state.origin.x + offsetX) % this.state.stride.x) + 1
-    var selectedGridX = Math.floor((this.state.origin.x + offsetX) / this.state.stride.x)
-
-    var offsetY = ((this.state.height / 2) - e.pageY) * -1
-    //var gridY = ((this.state.origin.y + offsetY) % this.state.stride.y) + 1
-    var selectedGridY = Math.floor((this.state.origin.y + offsetY) / this.state.stride.y)
-
-    this.setState({
-      selectedGrid: {
-        x: selectedGridX,
-        y: selectedGridY
-      }
-    })*/
-
-    // TODO: fix small error, which seems to always be a third of a grid element
-    // shifted to the bottom right
-
     // get the offset the grid has to the edge of the screen (relevant for pageX)
     var offsetX = this.state.origin.x % this.state.stride.x
-    // transform mouse coords into a value in [- width/2, with/2], which
-    // is necessary in order to apply the pageX to our origin value
-    var offsettedPageX = e.pageX + offsetX - (this.state.width / 2)
+    var offsettedPageX = e.pageX + offsetX
     // finally, calculate the selected spot on the grid
     // floor the result to get an integer
     var gridX = Math.floor(
@@ -188,13 +159,13 @@ export default class CoordinateSystem extends React.Component {
       // our pageX offset is negated in order to make pageX "flow" with the rate
       // of change of our origin, as further down means a decreasing value, which
       // is not the case with page values
-      ((offsettedPageX * -1) + this.state.origin.x) / this.state.stride.x
+      ((offsettedPageX) + this.state.origin.x) / this.state.stride.x
     )
 
     var offsetY = this.state.origin.y % this.state.stride.y
-    var offsettedPageY = e.pageY + offsetY - (this.state.height / 2)
+    var offsettedPageY = e.pageY + offsetY
     var gridY = Math.floor(
-      ((offsettedPageY * -1) + this.state.origin.y) / this.state.stride.y
+      ((offsettedPageY) + this.state.origin.y) / this.state.stride.y
     )
 
     this.drawTile(gridX, gridY, '#0080ff')
@@ -232,8 +203,8 @@ export default class CoordinateSystem extends React.Component {
       var oldOrigin = this.state.origin
       this.setState({
         origin: {
-          x: this.state.origin.x - relative.x,
-          y: this.state.origin.y - relative.y
+          x: this.state.origin.x + relative.x,
+          y: this.state.origin.y + relative.y
         },
         oldMouse: {
           x: e.pageX,
@@ -289,7 +260,7 @@ export default class CoordinateSystem extends React.Component {
         <canvas
           ref='canvas'
           width={this.state.width}
-          height={this.state.height}
+          height={this.state.height - 40}
           style={{ position:'absolute', zIndex: -1 }}
         >
           Canvas is not supported
