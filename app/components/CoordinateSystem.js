@@ -260,7 +260,7 @@ export default class CoordinateSystem extends React.Component {
         <canvas
           ref='canvas'
           width={this.state.width}
-          height={this.state.height - 40}
+          height={this.state.height}
           style={{ position:'absolute', zIndex: -1 }}
         >
           Canvas is not supported

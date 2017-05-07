@@ -4,10 +4,10 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-export const ADD_PLAYER = 'ADD_PLAYER';
-export const ADD_PLAYERS = 'ADD_PLAYERS';
+var ADD_PLAYER = exports.ADD_PLAYER = 'ADD_PLAYER';
+var ADD_PLAYERS = exports.ADD_PLAYERS = 'ADD_PLAYERS';
 
-export const addPlayer = (name, pass) => {
+var addPlayer = exports.addPlayer = function addPlayer(name, pass) {
   return {
     type: ADD_PLAYER,
     name: name,
