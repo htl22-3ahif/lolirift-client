@@ -120,7 +120,9 @@ export default class CoordinateSystem extends React.Component {
     var cursor = !this.state.move ? 'auto' : 'move'
 
     return {
-      cursor: cursor
+      cursor: cursor,
+      width: this.state.width,
+      height: this.state.height
     }
   }
 
