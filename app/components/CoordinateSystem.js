@@ -170,7 +170,7 @@ export default class CoordinateSystem extends React.Component {
       ((offsettedPageY) + this.state.origin.y) / this.state.stride.y
     )
 
-    this.drawTile(gridX, gridY, '#0080ff')
+    //this.drawTile(gridX, gridY, '#0080ff')
 
     this.setState({
       selectedGrid: {
