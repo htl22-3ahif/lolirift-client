@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
+import Mark from 'material-ui/svg-icons/action/highlight-off'
 
-export default class CoordinateSystem extends React.Component {
+export default class Grid extends React.Component {
 
   static propTypes = {}/*
     points: PropTypes.arrayOf(
@@ -37,27 +38,10 @@ export default class CoordinateSystem extends React.Component {
   }
 
   updateCanvas () {
+    // https://chocchip.com.au/html-5-canvas-cheat-sheet/
     const ctx = this.refs.canvas.getContext('2d')
     ctx.fillStyle = '#eceff1'
     ctx.fillRect(0, 0, this.state.width, this.state.height)
-
-    /*
-    // drawing x line
-    if (this.state.origin.y > 0 && this.state.origin.y < this.state.height) {
-      ctx.beginPath()
-      ctx.moveTo(0, this.state.origin.y)
-      ctx.lineTo(this.state.width, this.state.origin.y)
-      ctx.stroke()
-    }
-
-    // drawing y line
-    if (this.state.origin.x > 0 && this.state.origin.x < this.state.width) {
-      ctx.beginPath()
-      ctx.moveTo(this.state.origin.x, 0)
-      ctx.lineTo(this.state.origin.x, this.state.height)
-      ctx.stroke()
-    }
-    */
 
     // draw gridlines on x
     {
@@ -86,6 +70,7 @@ export default class CoordinateSystem extends React.Component {
     }
 
     this.drawTile(this.state.selectedGrid.x, this.state.selectedGrid.y, '#0080ff')
+    this.drawImg(this.state.selectedGrid.x, this.state.selectedGrid.y - 1, 'resources/ic_highlight_off.png')
 
     // write some information on the screen
     {
@@ -124,6 +109,20 @@ export default class CoordinateSystem extends React.Component {
     var y = tileY * this.state.stride.y + this.state.origin.y
 
     ctx.fillRect(x, y, this.state.stride.x, this.state.stride.y)
+  }
+
+  drawImg (tileX, tileY, src) {
+    const ctx = this.refs.canvas.getContext('2d')
+
+    var x = tileX * this.state.stride.x + this.state.origin.x
+    var y = tileY * this.state.stride.y + this.state.origin.y
+
+    var drawing = new Image()
+    drawing.src = src
+    /*drawing.onload = function() {
+      ctx.drawImage(drawing, x, y, this.state.stride.x, this.state.stride.y)
+    }*/
+    ctx.drawImage(drawing, x, y, this.state.stride.x, this.state.stride.y)
   }
 
   onClick = (e) => {

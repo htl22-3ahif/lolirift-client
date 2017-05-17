@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import CoordinateSystem from '../components/CoordinateSystem'
+import Grid from '../components/Grid'
 
 const mapStateToProps = (state) => {
   return {
@@ -14,6 +14,6 @@ const mapDispatchToProps = (dispatch) => {
 const GridContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(CoordinateSystem)
+)(Grid)
 
 export default GridContainer
