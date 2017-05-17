@@ -70,7 +70,12 @@ export default class Grid extends React.Component {
     }
 
     this.drawTile(this.state.selectedGrid.x, this.state.selectedGrid.y, '#0080ff')
-    this.drawImg(this.state.selectedGrid.x, this.state.selectedGrid.y - 1, 'resources/ic_highlight_off.png')
+    this.drawImg(this.state.selectedGrid.x + 2, this.state.selectedGrid.y, 'resources/yuyuko.png')
+    this.drawImg(this.state.selectedGrid.x + 3, this.state.selectedGrid.y, 'resources/youmu.png')
+    this.drawImg(this.state.selectedGrid.x - 3, this.state.selectedGrid.y + 1, 'resources/yukari.png')
+    this.drawImg(this.state.selectedGrid.x - 4, this.state.selectedGrid.y, 'resources/ran.png')
+    this.drawImg(this.state.selectedGrid.x - 5, this.state.selectedGrid.y - 1, 'resources/chen.png')
+    this.drawImg(this.state.selectedGrid.x + 5, this.state.selectedGrid.y + 5, 'resources/patchouli.png')
 
     // write some information on the screen
     {
@@ -119,10 +124,15 @@ export default class Grid extends React.Component {
 
     var drawing = new Image()
     drawing.src = src
-    /*drawing.onload = function() {
-      ctx.drawImage(drawing, x, y, this.state.stride.x, this.state.stride.y)
-    }*/
-    ctx.drawImage(drawing, x, y, this.state.stride.x, this.state.stride.y)
+
+    var width = drawing.width
+    var height = drawing.height
+
+    var factor = (width > height) ? this.state.stride.x / width : this.state.stride.y / height
+    var xoffset = (height > width) ? ((height - width) / 2) * factor : 0
+    var yoffset = (width > height) ? ((width - height) / 2) * factor : 0
+
+    ctx.drawImage(drawing, x + xoffset, y + yoffset, width * factor, height * factor)
   }
 
   onClick = (e) => {
