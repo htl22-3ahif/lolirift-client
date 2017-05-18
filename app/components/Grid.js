@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react'
-import Mark from 'material-ui/svg-icons/action/highlight-off'
 
 export default class Grid extends React.Component {
 
@@ -124,9 +123,6 @@ export default class Grid extends React.Component {
 
     var drawing = new Image()
     drawing.src = src
-
-    // TODO: keep original width/height relative to stride, so that differently
-    // sized images don't have the same boundaries after the calculations
 
     var width = drawing.width
     var height = drawing.height
