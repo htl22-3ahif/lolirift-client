@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
-import { BrowserRouter as Router, Route } from 'react-router'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin'
@@ -19,8 +19,8 @@ ReactDOM.render((
     <Provider store={store}>
       <Router>
         <div>
-          <Route exact path="/game" component={Login} />
-          <Route path="/" component={App} />
+          <Route path="/" component={Login} />
+          <Route path="/game" component={App} />
         </div>
       </Router>
     </Provider>

@@ -2,15 +2,7 @@ import React, { PropTypes } from 'react'
 
 export default class Background extends React.Component {
 
-  static propTypes = {}/*
-    points: PropTypes.arrayOf(
-      PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        x: PropTypes.number.isRequired,
-        y: PropTypes.number.isRequired
-      }).isRequired
-    ).isRequired
-  }*/
+  static propTypes = {}
 
   constructor () {
     super()
