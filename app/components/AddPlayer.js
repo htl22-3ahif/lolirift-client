@@ -14,7 +14,7 @@ export default class AddPlayer extends React.Component {
     super()
 
     this.state = {
-      open: false,
+      open: true,
       layer: 0,
     }
   }
@@ -87,6 +87,6 @@ render () {
         />
       </Dialog>
     </div>
-  );
+  )
   }
 }

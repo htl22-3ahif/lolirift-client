@@ -1,5 +1,9 @@
 import React, { PropTypes } from 'react'
 
+import Paper from 'material-ui/Paper'
+import TextField from 'material-ui/TextField'
+import FlatButton from 'material-ui/FlatButton'
+
 export default class LoginForm extends React.Component {
 
   static propTypes = {}
@@ -11,17 +15,20 @@ export default class LoginForm extends React.Component {
       height: window.innerHeight
     }
 
-    window.onresize = this.onResize.bind(this)
+    window.addEventListener('resize', this.onResize.bind(this))
   }
 
   componentDidMount () {}
 
   componentDidUpdate () {}
 
-  getStyles () {
+  getPaperStyles () {
     return {
-      width: this.state.width,
-      height: this.state.height
+      position: 'absolute',
+      top: (this.state.height * 0.5) - (this.state.height * 0.5 / 2),
+      left: (this.state.width * 0.5) - (this.state.width * 0.4 / 2),
+      width: this.state.width * 0.4,
+      height: this.state.height * 0.5
     }
   }
 
@@ -32,13 +39,19 @@ export default class LoginForm extends React.Component {
     })
   }
 
+
   render () {
     console.log('render loginform');
     console.log(this.props);
-    var styles = this.getStyles()
+
+    const paperStyle = this.getPaperStyles()
 
     return (
       <div>
+        <Paper
+        style={paperStyle}
+        >
+        </Paper>
       </div>
     )
   }

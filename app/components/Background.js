@@ -11,7 +11,7 @@ export default class Background extends React.Component {
       height: window.innerHeight
     }
 
-    window.onresize = this.onResize.bind(this)
+    window.addEventListener('resize', this.onResize.bind(this))
   }
 
   componentDidMount () {
@@ -24,7 +24,7 @@ export default class Background extends React.Component {
 
   updateCanvas () {
     const ctx = this.refs.canvas.getContext('2d')
-    ctx.fillStyle = '#32cd32'
+    ctx.fillStyle = '#238f23'
     ctx.fillRect(0, 0, this.state.width, this.state.height)
 
     // write some information on the screen
@@ -36,6 +36,7 @@ export default class Background extends React.Component {
 
   getStyles () {
     return {
+      position: 'absolute',
       width: this.state.width,
       height: this.state.height
     }

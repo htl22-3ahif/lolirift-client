@@ -25,7 +25,7 @@ export default class Grid extends React.Component {
       rate: 1
     }
 
-    window.onresize = this.onResize.bind(this)
+    window.addEventListener('resize', this.onResize.bind(this))
   }
 
   componentDidMount () {
