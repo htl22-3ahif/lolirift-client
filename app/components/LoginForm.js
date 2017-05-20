@@ -1,11 +1,11 @@
 import React, { PropTypes } from 'react'
-import { withRouter } from 'react-router-dom'
+import history from '../history'
 
 import Paper from 'material-ui/Paper'
 import TextField from 'material-ui/TextField'
 import FlatButton from 'material-ui/FlatButton'
 
-class LoginForm extends React.Component {
+export default class LoginForm extends React.Component {
 
   static propTypes = {}
 
@@ -71,13 +71,15 @@ class LoginForm extends React.Component {
 
   handleSubmit = () => {
     //var p = this.props.onAddPlayer(this.state.player)
-    this.props.history.push('/game')
+    //this.props.history.push('/game')
+    //this.props.history.go()
+    history.push('/game')
     //this.context.history.push('/game')
   }
 
   render () {
-    console.log('render loginform');
-    console.log(this.props);
+    console.log('render loginform')
+    console.log(this.props)
 
     const paperStyle = this.getPaperStyles()
     const textFieldStyle = this.getTextFieldStyles()
@@ -116,5 +118,3 @@ class LoginForm extends React.Component {
     )
   }
 }
-
-export default withRouter(LoginForm);

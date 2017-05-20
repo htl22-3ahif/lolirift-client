@@ -2,8 +2,8 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
-import { Switch, Redirect } from 'react-router-dom'
+import { Router } from 'react-router'
+import { Route, Switch } from 'react-router-dom'
 
 import injectTapEventPlugin from 'react-tap-event-plugin'
 injectTapEventPlugin();
@@ -14,6 +14,7 @@ import { grey700, blueGrey700, blueGrey800, blueGrey900, blue50, blue100, blue20
 import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 
 import world from './reducers'
+import history from './history'
 import App from './App.js'
 import Login from './Login.js'
 
@@ -33,15 +34,15 @@ const muiTheme = getMuiTheme({
 })
 
 ReactDOM.render((
-  <MuiThemeProvider muiTheme={muiTheme}>
-    <Provider store={store}>
-      <Router>
+  <Router history={history}>
+    <MuiThemeProvider muiTheme={muiTheme}>
+      <Provider store={store}>
         <Switch>
           <Route path='/' component={Login} />
           <Route path='/game' component={App} />
         </Switch>
-      </Router>
-    </Provider>
-  </MuiThemeProvider>
+      </Provider>
+    </MuiThemeProvider>
+  </Router>
   ), document.getElementById('root')
 )
