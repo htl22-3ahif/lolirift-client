@@ -24,13 +24,14 @@ export default class Background extends React.Component {
 
   updateCanvas () {
     const ctx = this.refs.canvas.getContext('2d')
-    ctx.fillStyle = '#238f23'
+    ctx.fillStyle = '#455A64'
     ctx.fillRect(0, 0, this.state.width, this.state.height)
 
     // write some information on the screen
     {
-      ctx.fillStyle = '#404040'
-      ctx.fillText("made with <3 by lolrifters", 10, this.state.height - 10)
+      ctx.fillStyle = '#FFFFFF'
+      ctx.font="18px Arial";
+      ctx.fillText("made with <3 by lolirifters", 10, this.state.height - 10)
     }
   }
 

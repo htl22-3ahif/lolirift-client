@@ -1,3 +1,5 @@
+// kept for legacy, as this file isn't used anymore but may be recycled in the future
+
 import React from 'react'
 import PropTypes from 'prop-types'
 
