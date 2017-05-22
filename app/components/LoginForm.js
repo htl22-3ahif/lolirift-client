@@ -13,7 +13,9 @@ export default class LoginForm extends React.Component {
     super()
     this.state = {
       width: window.innerWidth,
-      height: window.innerHeight
+      height: window.innerHeight,
+      user: '',
+      pass: ''
     }
     window.addEventListener('resize', this.onResize.bind(this))
   }
@@ -70,11 +72,57 @@ export default class LoginForm extends React.Component {
   }
 
   handleSubmit = () => {
-    //var p = this.props.onAddPlayer(this.state.player)
-    //this.props.history.push('/game')
-    //this.props.history.go()
+    if (this.state.user.length > 0 || this.state.pass.length > 0) { return }
+
+    console.log('login submitted')
+
     history.push('/game')
-    //this.context.history.push('/game')
+  }
+
+  handleUser = (e) => {
+    // enter key
+    if (e.which == 13) {
+      this.handleSubmit()
+      return
+    }
+
+    // tab/shift/ctrl/alt key
+    if (e.which == 9 || e.which == 16 || e.which == 17 || e.which == 18) {
+      return
+    }
+
+    var user = this.state.user
+
+    // backspace key
+    if (e.which == 8) {
+      this.setState({ user: user.substring(0, user.length - 1) })
+      return
+    }
+
+    this.setState({ user: user + e.key })
+  }
+
+  handlePass = (e) => {
+    // enter key
+    if (e.which == 13) {
+      this.handleSubmit()
+      return
+    }
+
+    // tab/shift/ctrl/alt key
+    if (e.which == 9 || e.which == 16 || e.which == 17 || e.which == 18) {
+      return
+    }
+
+    var pass = this.state.pass
+
+    // backspace key
+    if (e.which == 8) {
+      this.setState({ pass: pass.substring(0, pass.length - 1) })
+      return
+    }
+
+    this.setState({ pass: pass + e.key })
   }
 
   render () {
@@ -93,13 +141,17 @@ export default class LoginForm extends React.Component {
           <h1>Ready to rift?</h1>
           <div id='textfields'>
             <TextField
+              value={this.state.user}
               hintText='Name'
               style={textFieldStyle}
+              onKeyDown={this.handleUser.bind(this)}
             />
             <TextField
+              value={this.state.pass}
               type='password'
               hintText='Password'
               style={textFieldStyle}
+              onKeyDown={this.handlePass.bind(this)}
             />
           </div>
           <div id='footer'>
