@@ -8,9 +8,7 @@ import FlatButton from 'material-ui/FlatButton'
 
 export default class LoginForm extends Component {
 
-  static propTypes = {
-    dispatch: PropTypes.func.isRequired
-  }
+  static propTypes = {}
 
   constructor (props) {
     super(props)
@@ -75,12 +73,12 @@ export default class LoginForm extends Component {
   }
 
   handleSubmit = () => {
-    if (this.state.user.length > 0 || this.state.pass.length > 0) { return }
+    if (!(this.state.user.length > 0 || this.state.pass.length > 0)) { return }
 
     console.log('login submitted')
 
-    this.props.dispatch(addPlayer(this.state.user, this.state.pass))
-
+    var player = this.props.onAddPlayer(this.state.user, this.state.pass)
+    console.log('dispatched ' + player)
     //history.push('/game')
   }
 

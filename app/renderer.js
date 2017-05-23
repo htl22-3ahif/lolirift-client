@@ -2,7 +2,8 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 import { Provider } from 'react-redux'
-import { store } from './store.js'
+import { createStore } from "redux"
+import world from './reducers'
 
 import injectTapEventPlugin from 'react-tap-event-plugin'
 injectTapEventPlugin();
@@ -14,6 +15,11 @@ import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 
 import App from './App.js'
 import Login from './Login.js'
+
+const store = createStore(world)
+
+console.log('store created')
+console.log(store.getState())
 
 const muiTheme = getMuiTheme({
   baseTheme: darkBaseTheme,
