@@ -1,9 +1,8 @@
-import React from 'react'
+import React, { Component } from 'react'
 
 import GridContainer from './containers/GridContainer'
-//import AddPlayerContainer from './containers/AddPlayerContainer'
 
-export default class App extends React.Component {
+export default class App extends Component {
   render () {
     return (
       <div>

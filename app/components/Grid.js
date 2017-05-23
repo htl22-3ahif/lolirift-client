@@ -1,6 +1,6 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 
-export default class Grid extends React.Component {
+export default class Grid extends Component {
 
   static propTypes = {}/*
     points: PropTypes.arrayOf(

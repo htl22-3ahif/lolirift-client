@@ -1,7 +1,6 @@
 // kept for legacy, as this file isn't used anymore but may be recycled in the future
 
-import React from 'react'
-import PropTypes from 'prop-types'
+import React, { Component, PropTypes } from 'react'
 
 import Paper from 'material-ui/Paper'
 import Dialog from 'material-ui/Dialog'
@@ -9,7 +8,7 @@ import PersonAdd from 'material-ui/svg-icons/social/person-add'
 import TextField from 'material-ui/TextField'
 import FlatButton from 'material-ui/FlatButton'
 
-export default class AddPlayer extends React.Component {
+export default class AddPlayer extends Component {
   static propTypes = {}
 
   constructor () {

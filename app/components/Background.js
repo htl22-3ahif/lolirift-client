@@ -1,6 +1,6 @@
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes } from 'react'
 
-export default class Background extends React.Component {
+export default class Background extends Component {
 
   static propTypes = {}
 

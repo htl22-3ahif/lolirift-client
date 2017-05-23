@@ -1,16 +1,19 @@
-import React, { PropTypes } from 'react'
-import history from '../history'
+import React, { Component, PropTypes } from 'react'
+
+import { addPlayer } from '../actions'
 
 import Paper from 'material-ui/Paper'
 import TextField from 'material-ui/TextField'
 import FlatButton from 'material-ui/FlatButton'
 
-export default class LoginForm extends React.Component {
+export default class LoginForm extends Component {
 
-  static propTypes = {}
+  static propTypes = {
+    dispatch: PropTypes.func.isRequired
+  }
 
-  constructor () {
-    super()
+  constructor (props) {
+    super(props)
     this.state = {
       width: window.innerWidth,
       height: window.innerHeight,
@@ -76,7 +79,9 @@ export default class LoginForm extends React.Component {
 
     console.log('login submitted')
 
-    history.push('/game')
+    this.props.dispatch(addPlayer(this.state.user, this.state.pass))
+
+    //history.push('/game')
   }
 
   handleUser = (e) => {
