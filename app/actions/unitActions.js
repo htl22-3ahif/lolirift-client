@@ -1,12 +1,6 @@
-"use strict";
+export const ADD_UNIT = 'ADD_UNIT'
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var ADD_UNIT = exports.ADD_UNIT = 'ADD_UNIT';
-
-var addUnit = exports.addUnit = function addUnit(vertices, position, /*actions, state,*/ owner) {
+export const addUnit = (vertices, position, /*actions, state,*/ owner) => {
   return {
     type: ADD_UNIT,
     vertices: vertices,
@@ -14,12 +8,12 @@ var addUnit = exports.addUnit = function addUnit(vertices, position, /*actions, 
     // actions: TODO: implement,
     // state: TODO: implement,
     owner: owner
-  };
-};
+  }
+}
 
-var addUnits = exports.addUnits = function addUnits(units) {
+export const addUnits = (units) => {
   return {
     type: ADD_UNITS,
     units: units
-  };
-};
+  }
+}

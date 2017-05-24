@@ -1,15 +1,9 @@
-"use strict";
+export const ADD_ACTION = 'ADD_ACTION'
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var ADD_ACTION = exports.ADD_ACTION = 'ADD_ACTION';
-
-var addAction = exports.addAction = function addAction(consequence, paramTypes) {
+export const addPlayer = (consequence, paramTypes) => {
   return {
     type: ADD_ACTION,
     consequence: consequence,
     paramTypes: paramTypes
-  };
-};
+  }
+}
