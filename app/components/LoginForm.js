@@ -1,10 +1,13 @@
 import React, { Component, PropTypes } from 'react'
 
-import { addPlayer } from '../actions'
-
+import IconButton from 'material-ui/IconButton'
+import CloseIcon from 'material-ui/svg-icons/navigation/close'
+import MinimizeIcon from 'material-ui/svg-icons/navigation/fullscreen-exit'
+import MaximizeIcon from 'material-ui/svg-icons/navigation/fullscreen'
 import Paper from 'material-ui/Paper'
 import TextField from 'material-ui/TextField'
 import FlatButton from 'material-ui/FlatButton'
+import { blueGrey50, blue200 } from 'material-ui/styles/colors'
 
 export default class LoginForm extends Component {
 
@@ -16,14 +19,21 @@ export default class LoginForm extends Component {
       width: window.innerWidth,
       height: window.innerHeight,
       user: '',
-      pass: ''
+      pass: '',
+      dispatched: false
     }
     window.addEventListener('resize', this.onResize.bind(this))
   }
 
   componentDidMount () {}
 
-  componentDidUpdate () {}
+  componentDidUpdate () {
+    if (this.state.dispatched) {
+      // TODO: validate user input (ignoring for now)
+      // change url
+
+    }
+  }
 
   getPaperStyles () {
     var minWidth = this.state.width * 0.4 < 200 ? true : false
@@ -78,8 +88,11 @@ export default class LoginForm extends Component {
     console.log('login submitted')
 
     var player = this.props.onAddPlayer(this.state.user, this.state.pass)
-    console.log('dispatched ' + player)
-    //history.push('/game')
+    console.log('dispatched addPlayer ' + player)
+
+    this.setState({
+      dispatched: true
+    })
   }
 
   handleUser = (e) => {
@@ -128,6 +141,23 @@ export default class LoginForm extends Component {
     this.setState({ pass: pass + e.key })
   }
 
+  handleMinimize() {
+    let window = require('electron').remote.getCurrentWindow().minimize()
+  }
+
+  handleMaximize() {
+    let window = require('electron').remote.getCurrentWindow()
+    if (!window.isMaximized()) {
+      window.maximize()
+    } else {
+      window.unmaximize()
+    }
+  }
+
+  handleClose() {
+    let window = require('electron').remote.getCurrentWindow().close()
+  }
+
   render () {
     console.log('render loginform')
     console.log(this.props)
@@ -137,6 +167,27 @@ export default class LoginForm extends Component {
     const buttonStyle = this.getButtonStyles()
 
     return (
+      <div id='login-container'>
+      <div id='control-buttons-container' style={{ position: 'absolute', top: '5px', right: '5px' }}>
+        <IconButton
+        onTouchTap={this.handleMinimize.bind(this)}
+        style={{  }}
+        >
+          <MinimizeIcon color={blueGrey50} hoverColor={blue200} />
+        </IconButton>
+        <IconButton
+        onTouchTap={this.handleMaximize.bind(this)}
+        style={{  }}
+        >
+          <MaximizeIcon color={blueGrey50} hoverColor={blue200} />
+        </IconButton>
+        <IconButton
+          onTouchTap={this.handleClose.bind(this)}
+          style={{  }}
+        >
+          <CloseIcon color={blueGrey50} hoverColor={blue200} />
+        </IconButton>
+      </div>
       <div id='paper-container'>
         <Paper
         style={paperStyle}
@@ -169,6 +220,7 @@ export default class LoginForm extends Component {
             </div>
           </div>
         </Paper>
+      </div>
       </div>
     )
   }

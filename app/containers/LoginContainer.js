@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { addPlayer } from '../actions'
+import { addPlayer } from '../actions/playerActions.js'
 import LoginForm from '../components/LoginForm'
 
 const mapStateToProps = (state) => {
@@ -9,9 +9,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onAddPlayer: (name, pass) => {
-      var player = addPlayer(name, pass)
-      dispatch(player)
-      return player.name
+      dispatch(addPlayer(name, pass))
+      return name
     }
   }
 }
