@@ -22,6 +22,7 @@ export default class LoginForm extends Component {
       height: window.innerHeight,
       user: '',
       pass: '',
+      endpoint: 'localhost:8080/',
       dispatched: false
     }
     window.addEventListener('resize', this.onResize.bind(this))
@@ -87,14 +88,32 @@ export default class LoginForm extends Component {
   handleSubmit = () => {
     if (!(this.state.user.length > 0 || this.state.pass.length > 0)) { return }
 
-    console.log('login submitted')
+    var ws = new WebSocket("ws://" + this.state.endpoint)
 
-    var player = this.props.onChangePlayer(this.state.user, this.state.pass)
-    console.log('dispatched addPlayer ' + player)
+    ws.onopen = (e) => {
+      // succesfully connected to endpoint
+      console.log('login submitted')
 
-    this.setState({
-      dispatched: true
-    })
+      var player = this.props.onAddPlayer(this.state.user, this.state.pass)
+      console.log('dispatched addPlayer ' + player)
+
+      this.props.onAddWs(ws)
+
+      this.setState({
+        dispatched: true
+      })
+    }
+
+    ws.onmessage = (e) => {
+      // TODO: handle messages, which leads to changing state
+      console.log('message: ' + e.data)
+    }
+
+    ws.onerror = (e) => {
+      // error while connecting to endpoint
+      // NOTE: probably because endpoint does not have a lolirift server
+      // TODO: tell user that he has to try antother endpoint
+    }
   }
 
   handleUser = (e) => {
