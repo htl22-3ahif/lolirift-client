@@ -51,11 +51,12 @@ export default class Grid extends Component {
     this.updateCanvas()
 
     // name, vertices, x, y, /*actions, state,*/ owner
-    this.props.onAddUnit('yuyuko', null, 5, 4, this.props.player)
+    // id, owner, position, vertices, stats, actions, name
+    this.props.onAddUnit(1, this.props.player, { x: 5, y: 4 }, null, { health: 100 }, null, 'yuyuko')
     console.log('dispatched unit (yuyuko)')
-    this.props.onAddUnit('youmu', null, 6, 4, this.props.player)
+    this.props.onAddUnit(2, this.props.player, { x: 6, y: 4 }, null, { health: 100 }, null, 'youmu')
     console.log('dispatched unit (youmu)')
-    this.props.onAddUnit('yukari', null, 1, 1, this.props.player)
+    this.props.onAddUnit(3, this.props.player, { x: 1, y: 1 }, null, { health: 100 }, null, 'yukari')
     console.log('dispatched unit (yukari)')
   }
 
@@ -98,12 +99,12 @@ export default class Grid extends Component {
     // check all units that are inside the current boundaries and draw them
     {
       this.props.units.forEach((unit) => {
-        if (unit.x >= this.state.lowerGridBoundary.x
-          && unit.x <= this.state.upperGridBoundary.x
-          && unit.y >= this.state.lowerGridBoundary.y
-          && unit.y <= this.state.upperGridBoundary.y) {
+        if (unit.position.x >= this.state.lowerGridBoundary.x
+          && unit.position.x <= this.state.upperGridBoundary.x
+          && unit.position.y >= this.state.lowerGridBoundary.y
+          && unit.position.y <= this.state.upperGridBoundary.y) {
           if (unit.texture) {
-            this.drawImg(unit.x, unit.y, unit.texture)
+            this.drawImg(unit.position.x, unit.position.y, unit.texture)
           }
           /* else {
             this.drawVertices(...args)

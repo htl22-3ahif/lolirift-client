@@ -12,8 +12,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onAddUnit: (id, name, vertices, x, y, owner) => {
-      dispatch(addUnit(id, name, vertices, x, y, owner))
+    onAddUnit: (id, owner, position, vertices, stats, actions, name) => {
+      dispatch(addUnit(id, owner, position, vertices, stats, actions, name))
     }
   }
 }
