@@ -1,5 +1,11 @@
 import React, { Component, PropTypes } from 'react'
 
+import IconButton from 'material-ui/IconButton'
+import CloseIcon from 'material-ui/svg-icons/navigation/close'
+import MinimizeIcon from 'material-ui/svg-icons/navigation/fullscreen-exit'
+import MaximizeIcon from 'material-ui/svg-icons/navigation/fullscreen'
+import { blueGrey900, grey700 } from 'material-ui/styles/colors'
+
 export default class Grid extends Component {
 
   static propTypes = {}/*
@@ -229,13 +235,51 @@ export default class Grid extends Component {
     })
   }
 
+  handleMinimize() {
+    let window = require('electron').remote.getCurrentWindow().minimize()
+  }
+
+  handleMaximize() {
+    let window = require('electron').remote.getCurrentWindow()
+    if (!window.isMaximized()) {
+      window.maximize()
+    } else {
+      window.unmaximize()
+    }
+  }
+
+  handleClose() {
+    let window = require('electron').remote.getCurrentWindow().close()
+  }
+
   render () {
     console.log('render');
     console.log(this.props);
     var styles = this.getStyles()
 
     return (
-      <div
+      <div id='grid-container'>
+      <div id='control-buttons-container' style={{ position: 'absolute', top: '5px', right: '5px' }}>
+        <IconButton
+        onTouchTap={this.handleMinimize.bind(this)}
+        style={{  }}
+        >
+          <MinimizeIcon color={blueGrey900} hoverColor={grey700} />
+        </IconButton>
+        <IconButton
+        onTouchTap={this.handleMaximize.bind(this)}
+        style={{  }}
+        >
+          <MaximizeIcon color={blueGrey900} hoverColor={grey700} />
+        </IconButton>
+        <IconButton
+          onTouchTap={this.handleClose.bind(this)}
+          style={{  }}
+        >
+          <CloseIcon color={blueGrey900} hoverColor={grey700} />
+        </IconButton>
+      </div>
+      <div id='canvas-container'
         onMouseDown={this.onMouseDown.bind(this)}
         onMouseUp={this.onMouseUp.bind(this)}
         onMouseMove={this.onMouseMove.bind(this)}
@@ -253,6 +297,7 @@ export default class Grid extends Component {
         >
           Canvas is not supported
         </canvas>
+      </div>
       </div>
     )
   }
