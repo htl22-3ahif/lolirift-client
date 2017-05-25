@@ -59,10 +59,6 @@ export default class Grid extends Component {
     console.log('dispatched unit (yukari)')
   }
 
-  /* TODO: componentWillReceiveProps(nextProps) {
-    // update props with next props
-  }*/
-
   componentDidUpdate () {
     this.updateCanvas()
   }

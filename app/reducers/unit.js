@@ -5,14 +5,15 @@ const unit = (state = {}, action) => {
   switch (action.type) {
     case ADD_UNIT:
       return {
-        name: action.name,
+        type: ADD_UNIT,
+        id: action.id,
+        owner: action.owner,
+        position: action.position,
         vertices: action.vertices,
-        texture: action.texture,
-        x: action.x,
-        y: action.y,
-        // actions: TODO: implement,
-        // state: TODO: implement,
-        owner: action.owner
+        stats: action.stats,
+        actions: action.stats,
+        name: action.stats,
+        texture: action.texture
       }
 
     default:

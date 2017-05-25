@@ -1,15 +1,18 @@
 export const ADD_UNIT = 'ADD_UNIT'
 
-export const addUnit = (name, vertices, x, y, /*actions, state,*/ owner) => {
+export const addUnit = (id, owner, position, vertices, stats, actions, name) => {
   return {
     type: ADD_UNIT,
-    name: name,
+    id: id,
+    owner: owner,
+    position: {
+      x: position.x,
+      y: position.y
+    },
     vertices: vertices,
-    texture: 'resources/' + name + '.png',
-    x: x,
-    y: y,
-    // actions: TODO: implement,
-    // state: TODO: implement,
-    owner: owner
+    stats: stats,
+    actions: actions,
+    name: name,
+    texture: 'resources/' + name + '.png'
   }
 }
