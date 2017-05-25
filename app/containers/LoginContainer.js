@@ -1,5 +1,7 @@
 import { connect } from 'react-redux'
-import { addPlayer, addWs, tooglePage } from '../actions'
+import { changePlayer } from '../actions/playerActions.js'
+import { addWs } from '../actions/wsAction.js'
+import { togglePage } from '../actions/pageActions.js'
 import LoginForm from '../components/LoginForm'
 
 const mapStateToProps = (state) => {

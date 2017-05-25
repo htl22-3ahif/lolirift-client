@@ -94,8 +94,8 @@ export default class LoginForm extends Component {
       // succesfully connected to endpoint
       console.log('login submitted')
 
-      var player = this.props.onAddPlayer(this.state.user, this.state.pass)
-      console.log('dispatched addPlayer ' + player)
+      var player = this.props.onChangePlayer(this.state.user, this.state.pass)
+      console.log('dispatched changePlayer ' + player)
 
       this.props.onAddWs(ws)
 
