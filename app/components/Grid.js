@@ -8,7 +8,19 @@ import { blueGrey900, grey700 } from 'material-ui/styles/colors'
 
 export default class Grid extends Component {
 
-  static propTypes = {}/*
+  static propTypes = {
+    player: PropTypes.shape({
+      name: PropTypes.string
+    }).isRequired,
+    units: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string,
+        texture: PropTypes.string,
+        x: PropTypes.number,
+        y: PropTypes.number
+      })
+    ).isRequired
+  }/*
     points: PropTypes.arrayOf(
       PropTypes.shape({
         name: PropTypes.string.isRequired,

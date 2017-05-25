@@ -1,16 +1,18 @@
 import { ADD_UNIT, ADD_UNITS } from '../actions'
 import players from './player'
-import position from './position'
 
 const unit = (state = {}, action) => {
   switch (action.type) {
     case ADD_UNIT:
       return {
-        vertices: vertices(),
-        position: position(),
+        name: action.name,
+        vertices: action.vertices,
+        texture: action.texture,
+        x: action.x,
+        y: action.y,
         // actions: TODO: implement,
         // state: TODO: implement,
-        owner: player()
+        owner: action.owner
       }
 
     default:
