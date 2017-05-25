@@ -1,4 +1,4 @@
-import { CHANGE_PLAYER } from '../actions'
+import { CHANGE_PLAYER } from '../actions/playerActions.js'
 
 const player = (state = {}, action) => {
   switch (action.type) {

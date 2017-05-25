@@ -18,8 +18,10 @@ export default class Grid extends Component {
       PropTypes.shape({
         name: PropTypes.string.isRequired,
         texture: PropTypes.string.isRequired,
-        x: PropTypes.number.isRequired,
-        y: PropTypes.number.isRequired
+        position: PropTypes.shape({
+          x: PropTypes.number.isRequired,
+          y: PropTypes.number.isRequired
+        }).isRequired
       })
     ).isRequired
   }
@@ -331,6 +333,7 @@ export default class Grid extends Component {
       let unit = this.props.units.find((obj) => { return obj.id == this.state.selectedUnit })
       display = <UnitDisplay unit={unit} position={{ x: this.state.oldMouse.x, y: this.state.oldMouse.y }} />
     }
+    console.log(display)
 
     return (
       <div id='grid-container'>
