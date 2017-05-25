@@ -89,7 +89,7 @@ export default class LoginForm extends Component {
 
     console.log('login submitted')
 
-    var player = this.props.onAddPlayer(this.state.user, this.state.pass)
+    var player = this.props.onChangePlayer(this.state.user, this.state.pass)
     console.log('dispatched addPlayer ' + player)
 
     this.setState({

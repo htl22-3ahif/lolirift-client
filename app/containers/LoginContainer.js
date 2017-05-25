@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { addPlayer } from '../actions/playerActions.js'
+import { changePlayer } from '../actions/playerActions.js'
 import { togglePage } from '../actions/pageActions.js'
 import LoginForm from '../components/LoginForm'
 
@@ -9,8 +9,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onAddPlayer: (name, pass) => {
-      dispatch(addPlayer(name, pass))
+    onChangePlayer: (name, pass) => {
+      dispatch(changePlayer(name, pass))
       return name
     },
     onTogglePage: (page) => {
