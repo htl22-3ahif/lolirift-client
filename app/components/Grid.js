@@ -101,9 +101,7 @@ export default class Grid extends Component {
 
     // check all units that are inside the current boundaries and draw them
     {
-      console.log(this.props.units)
       this.props.units.forEach((unit) => {
-        ctx.fillText("blabla: " + unit.name + ", " + unit.x + ", " + unit.y + ", " + unit.texture, 10, 100)
         if (unit.x >= this.state.lowerGridBoundary.x
           && unit.x <= this.state.upperGridBoundary.x
           && unit.y >= this.state.lowerGridBoundary.y
