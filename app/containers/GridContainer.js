@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { addUnit, addUnits } from '../actions/unitActions.js'
+import { addUnit } from '../actions/unitActions.js'
 import Grid from '../components/Grid'
 
 const mapStateToProps = (state) => {
@@ -12,8 +12,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onAddUnit: (name, vertices, position, owner) => {
-      dispatch(addUnit(vertices, position, owner))
+    onAddUnit: (name, vertices, x, y, owner) => {
+      dispatch(addUnit(name, vertices, x, y, owner))
     }
   }
 }
