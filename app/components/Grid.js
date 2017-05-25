@@ -8,7 +8,19 @@ import { blueGrey900, grey700 } from 'material-ui/styles/colors'
 
 export default class Grid extends Component {
 
-  static propTypes = {}/*
+  static propTypes = {
+    player: PropTypes.shape({
+      name: PropTypes.string
+    }).isRequired,
+    units: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string,
+        texture: PropTypes.string,
+        x: PropTypes.number,
+        y: PropTypes.number
+      })
+    ).isRequired
+  }/*
     points: PropTypes.arrayOf(
       PropTypes.shape({
         name: PropTypes.string.isRequired,
@@ -89,9 +101,7 @@ export default class Grid extends Component {
 
     // check all units that are inside the current boundaries and draw them
     {
-      console.log(this.props.units)
       this.props.units.forEach((unit) => {
-        ctx.fillText("blabla: " + unit.name + ", " + unit.x + ", " + unit.y + ", " + unit.texture, 10, 100)
         if (unit.x >= this.state.lowerGridBoundary.x
           && unit.x <= this.state.upperGridBoundary.x
           && unit.y >= this.state.lowerGridBoundary.y

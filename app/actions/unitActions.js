@@ -13,10 +13,3 @@ export const addUnit = (name, vertices, x, y, /*actions, state,*/ owner) => {
     owner: owner
   }
 }
-
-export const addUnits = (units) => {
-  return {
-    type: ADD_UNITS,
-    units: units
-  }
-}
