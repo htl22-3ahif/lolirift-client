@@ -14,9 +14,6 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onAddUnit: (name, vertices, position, owner) => {
       dispatch(addUnit(vertices, position, owner))
-    },
-    onAddUnits: (...units) => {
-      dispatch(addUnits(...units))
     }
   }
 }

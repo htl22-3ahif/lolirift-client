@@ -1,9 +1,10 @@
-import { ADD_UNIT, ADD_UNITS } from '../actions'
+import { ADD_UNIT } from '../actions'
 import players from './player'
 
 const unit = (state = {}, action) => {
   switch (action.type) {
     case ADD_UNIT:
+    console.log('ADD UNIT AAAAAAAAAAA')
       return {
         name: action.name,
         vertices: action.vertices,
@@ -22,7 +23,8 @@ const unit = (state = {}, action) => {
 
 const units = (state = [], action) => {
   switch (action.type) {
-    case ADD_UNITS:
+    case ADD_UNIT:
+      console.log('ADD UNITS AAAAAAAAAAA')
       return [
         ...state,
         unit(undefined, action)
