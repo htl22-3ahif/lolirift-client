@@ -3,14 +3,16 @@ import { addUnit, addUnits } from '../actions/unitActions.js'
 import Grid from '../components/Grid'
 
 const mapStateToProps = (state) => {
+  console.log('mapping state to grid props!! AAAA')
   return {
-    units: state.units
+    units: state.units,
+    player: state.player
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onAddUnit: (vertices, position, owner) => {
+    onAddUnit: (name, vertices, position, owner) => {
       dispatch(addUnit(vertices, position, owner))
     },
     onAddUnits: (...units) => {

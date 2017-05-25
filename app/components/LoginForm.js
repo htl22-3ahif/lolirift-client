@@ -33,7 +33,7 @@ export default class LoginForm extends Component {
     if (this.state.dispatched) {
       // TODO: validate user input (ignoring for now)
       this.props.onTogglePage(pages.SHOW_GAME)
-      console.log('page toggled (SHOW_GAME)')
+      console.log('dispatched page toggle (SHOW_GAME)')
     }
   }
 

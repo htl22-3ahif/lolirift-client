@@ -28,7 +28,8 @@ export default class Grid extends Component {
       oldMouse: { x: 0, y: 0 },
       stride: { x: 40, y: 40 },
       selectedGrid: { x: 0, y: 0 },
-      rate: 1
+      lowerGridBoundary: { x: 0, y: 0 },
+      upperGridBoundary: { x: 0, y: 0 }
     }
 
     window.addEventListener('resize', this.onResize.bind(this))
@@ -36,7 +37,19 @@ export default class Grid extends Component {
 
   componentDidMount () {
     this.updateCanvas()
+
+    // name, vertices, x, y, /*actions, state,*/ owner
+    this.props.onAddUnit('yuyuko', null, 5, 4, this.props.player)
+    console.log('dispatched unit (yuyuko)')
+    this.props.onAddUnit('youmu', null, 6, 4, this.props.player)
+    console.log('dispatched unit (youmu)')
+    this.props.onAddUnit('yukari', null, 1, 1, this.props.player)
+    console.log('dispatched unit (yukari)')
   }
+
+  /* TODO: componentWillReceiveProps(nextProps) {
+    // update props with next props
+  }*/
 
   componentDidUpdate () {
     this.updateCanvas()
@@ -74,6 +87,27 @@ export default class Grid extends Component {
       }
     }
 
+    // check all units that are inside the current boundaries and draw them
+    {
+      console.log(this.props.units)
+      this.props.units.forEach((unit) => {
+        ctx.fillText("blabla: " + unit.name + ", " + unit.x + ", " + unit.y + ", " + unit.texture, 10, 100)
+        if (unit.x >= this.state.lowerGridBoundary.x
+          && unit.x <= this.state.upperGridBoundary.x
+          && unit.y >= this.state.lowerGridBoundary.y
+          && unit.y <= this.state.upperGridBoundary.y) {
+          if (unit.texture) {
+            this.drawImg(unit.x, unit.y, unit.texture)
+          }
+          /* else {
+            this.drawVertices(...args)
+          }
+          */
+        }
+      })
+    }
+
+    /*
     this.drawTile(this.state.selectedGrid.x, this.state.selectedGrid.y, '#0080ff')
     this.drawImg(this.state.selectedGrid.x + 2, this.state.selectedGrid.y, 'resources/yuyuko.png')
     this.drawImg(this.state.selectedGrid.x + 3, this.state.selectedGrid.y, 'resources/youmu.png')
@@ -81,6 +115,14 @@ export default class Grid extends Component {
     this.drawImg(this.state.selectedGrid.x - 4, this.state.selectedGrid.y, 'resources/ran.png')
     this.drawImg(this.state.selectedGrid.x - 5, this.state.selectedGrid.y - 1, 'resources/chen.png')
     this.drawImg(this.state.selectedGrid.x + 5, this.state.selectedGrid.y + 5, 'resources/patchouli.png')
+    */
+
+    // make a cool circle
+    {
+      ctx.beginPath()
+      ctx.arc(this.state.origin.x, this.state.origin.y, 3, 0, 2 * Math.PI, false)
+      ctx.stroke()
+    }
 
     // write some information on the screen
     {
@@ -88,9 +130,8 @@ export default class Grid extends Component {
       ctx.fillText("mouse pos: " + this.state.oldMouse.x + ", " + this.state.oldMouse.y, 10, 10)
       ctx.fillText("origin: " + this.state.origin.x + ", " + this.state.origin.y, 10, 25)
       ctx.fillText("selected grid element: " + this.state.selectedGrid.x + ", " + this.state.selectedGrid.y, 10, 40)
-      ctx.beginPath()
-      ctx.arc(this.state.origin.x, this.state.origin.y, 3, 0, 2 * Math.PI, false)
-      ctx.stroke()
+      ctx.fillText("lower grid boundary: " + this.state.lowerGridBoundary.x + ", " + this.state.lowerGridBoundary.y, 10, 55)
+      ctx.fillText("upper grid boundary: " + this.state.upperGridBoundary.x + ", " + this.state.upperGridBoundary.y, 10, 70)
     }
   }
 
@@ -189,6 +230,23 @@ export default class Grid extends Component {
         }
       })
     }
+
+    var lowerBoundaryX = Math.floor((this.state.origin.x * -1) / this.state.stride.x)
+    var lowerBoundaryY = Math.floor((this.state.origin.y * -1) / this.state.stride.y)
+
+    var upperBoundaryX = Math.floor(((this.state.origin.x * -1) + this.state.width) / this.state.stride.x)
+    var upperBoundaryY = Math.floor(((this.state.origin.y * -1) + this.state.height) / this.state.stride.y)
+
+    this.setState({
+      lowerGridBoundary: {
+        x: lowerBoundaryX,
+        y: lowerBoundaryY
+      },
+      upperGridBoundary: {
+        x: upperBoundaryX,
+        y: upperBoundaryY
+      }
+    })
   }
 
   // scrolling will change stride size (and therefore scale the grid)

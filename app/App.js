@@ -9,8 +9,6 @@ import Login from './Login.js'
 class App extends Component {
   constructor() {
     super()
-    console.log('YOOO')
-    console.log(this)
   }
 
   render () {
