@@ -1,10 +1,10 @@
-export const ADD_PLAYER = 'ADD_PLAYER'
+export const CHANGE_PLAYER = 'ADD_PLAYER'
 export const ADD_CONTESTANT = 'ADD_CONTESTANT'
 export const ADD_CONTESTANTS = 'ADD_CONTESTANTS'
 
-export const addPlayer = (name, pass) => {
+export const changePlayer = (name, pass) => {
   return {
-    type: ADD_PLAYER,
+    type: CHANGE_PLAYER,
     name: name,
     pass: pass
   }

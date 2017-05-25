@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { addPlayer, addWs } from '../actions'
+import { addPlayer, addWs, tooglePage } from '../actions'
 import LoginForm from '../components/LoginForm'
 
 const mapStateToProps = (state) => {
@@ -8,12 +8,15 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onAddPlayer: (name, pass) => {
-      dispatch(addPlayer(name, pass))
+    onChangePlayer: (name, pass) => {
+      dispatch(changePlayer(name, pass))
       return name
     },
     onAddWs: (ws) => {
       dispatch(addWs(ws))
+    },
+    onTogglePage: (page) => {
+      dispatch(togglePage(page))
     }
   }
 }
