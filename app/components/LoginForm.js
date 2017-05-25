@@ -20,8 +20,6 @@ export default class LoginForm extends Component {
     this.state = {
       width: window.innerWidth,
       height: window.innerHeight,
-      user: '',
-      pass: '',
       endpoint: 'localhost:8080/',
       dispatched: false
     }
@@ -86,7 +84,10 @@ export default class LoginForm extends Component {
   }
 
   handleSubmit = () => {
-    if (!(this.state.user.length > 0 || this.state.pass.length > 0)) { return }
+    var user = this.refs.name.value
+    var pass = this.refs.pass.value
+
+    console.log(user + ", " + pass)
 
     var ws = new WebSocket("ws://" + this.state.endpoint)
 
@@ -94,7 +95,7 @@ export default class LoginForm extends Component {
       // succesfully connected to endpoint
       console.log('login submitted')
 
-      var player = this.props.onChangePlayer(this.state.user, this.state.pass)
+      var player = this.props.onChangePlayer(user, pass)
       console.log('dispatched changePlayer ' + player)
 
       this.props.onAddWs(ws)
@@ -122,21 +123,6 @@ export default class LoginForm extends Component {
       this.handleSubmit()
       return
     }
-
-    // tab/shift/ctrl/alt key
-    if (e.which == 9 || e.which == 16 || e.which == 17 || e.which == 18) {
-      return
-    }
-
-    var user = this.state.user
-
-    // backspace key
-    if (e.which == 8) {
-      this.setState({ user: user.substring(0, user.length - 1) })
-      return
-    }
-
-    this.setState({ user: user + e.key })
   }
 
   handlePass = (e) => {
@@ -145,21 +131,6 @@ export default class LoginForm extends Component {
       this.handleSubmit()
       return
     }
-
-    // tab/shift/ctrl/alt key
-    if (e.which == 9 || e.which == 16 || e.which == 17 || e.which == 18) {
-      return
-    }
-
-    var pass = this.state.pass
-
-    // backspace key
-    if (e.which == 8) {
-      this.setState({ pass: pass.substring(0, pass.length - 1) })
-      return
-    }
-
-    this.setState({ pass: pass + e.key })
   }
 
   handleMinimize() {
@@ -216,13 +187,13 @@ export default class LoginForm extends Component {
           <h1>Ready to rift?</h1>
           <div id='textfields'>
             <TextField
-              value={this.state.user}
+              ref='name'
               hintText='Name'
               style={textFieldStyle}
               onKeyDown={this.handleUser.bind(this)}
             />
             <TextField
-              value={this.state.pass}
+              ref='pass'
               type='password'
               hintText='Password'
               style={textFieldStyle}
