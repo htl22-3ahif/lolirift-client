@@ -1,5 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 
+import { pages } from '../actions/pageActions.js'
+
 import IconButton from 'material-ui/IconButton'
 import CloseIcon from 'material-ui/svg-icons/navigation/close'
 import MinimizeIcon from 'material-ui/svg-icons/navigation/fullscreen-exit'
@@ -30,8 +32,8 @@ export default class LoginForm extends Component {
   componentDidUpdate () {
     if (this.state.dispatched) {
       // TODO: validate user input (ignoring for now)
-      // change url
-
+      this.props.onTogglePage(pages.SHOW_GAME)
+      console.log('page toggled (SHOW_GAME)')
     }
   }
 

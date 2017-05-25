@@ -1,13 +1,41 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
-import GridContainer from './containers/GridContainer'
+import { pages } from './actions/pageActions.js'
 
-export default class App extends Component {
+import Game from './Game.js'
+import Login from './Login.js'
+
+class App extends Component {
+  constructor() {
+    super()
+    console.log('YOOO')
+    console.log(this)
+  }
+
   render () {
     return (
       <div>
-        <GridContainer />
+        { this.props.page == pages.SHOW_GAME && <Game /> }
+        { this.props.page == pages.SHOW_LOGIN && <Login /> }
       </div>
     )
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    page: state.page
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {}
+}
+
+const AppContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App)
+
+export default AppContainer

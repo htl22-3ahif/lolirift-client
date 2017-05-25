@@ -13,8 +13,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import { grey700, blueGrey700, blueGrey800, blueGrey900, blue50, blue100, blue200 } from 'material-ui/styles/colors'
 import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 
-import App from './App.js'
-import Login from './Login.js'
+import AppContainer from './App.js'
 
 const store = createStore(world)
 
@@ -40,7 +39,7 @@ const muiTheme = getMuiTheme({
 ReactDOM.render((
   <MuiThemeProvider muiTheme={muiTheme}>
     <Provider store={store}>
-      <Login />
+      <AppContainer />
     </Provider>
   </MuiThemeProvider>
   ), document.getElementById('root')
