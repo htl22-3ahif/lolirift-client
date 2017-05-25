@@ -84,10 +84,10 @@ export default class LoginForm extends Component {
   }
 
   handleSubmit = () => {
-    var user = this.refs.name.value
-    var pass = this.refs.pass.value
+    var user = this.refs.name.getValue()
+    var pass = this.refs.pass.getValue()
 
-    console.log(user + ", " + pass)
+    console.log(user + ', ' + pass)
 
     var ws = new WebSocket("ws://" + this.state.endpoint)
 
