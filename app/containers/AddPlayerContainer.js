@@ -1,3 +1,5 @@
+// kept for legacy, as this file isn't used anymore but may be recycled in the future
+
 import { connect } from 'react-redux'
 import { addPlayer } from '../actions/playerActions.js'
 import AddPlayer from '../components/AddPlayer'
