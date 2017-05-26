@@ -1,12 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 
-import UnitDisplay from './UnitDisplay.js'
-
-import IconButton from 'material-ui/IconButton'
-import CloseIcon from 'material-ui/svg-icons/navigation/close'
-import MinimizeIcon from 'material-ui/svg-icons/navigation/fullscreen-exit'
-import MaximizeIcon from 'material-ui/svg-icons/navigation/fullscreen'
-import { blueGrey900, grey700 } from 'material-ui/styles/colors'
+//import UnitDisplay from './UnitDisplay.js'
 
 export default class Grid extends Component {
 
@@ -306,57 +300,21 @@ export default class Grid extends Component {
     })
   }
 
-  handleMinimize() {
-    let window = require('electron').remote.getCurrentWindow().minimize()
-  }
-
-  handleMaximize() {
-    let window = require('electron').remote.getCurrentWindow()
-    if (!window.isMaximized()) {
-      window.maximize()
-    } else {
-      window.unmaximize()
-    }
-  }
-
-  handleClose() {
-    let window = require('electron').remote.getCurrentWindow().close()
-  }
-
   render () {
     console.log('render');
     console.log(this.props);
     var styles = this.getStyles()
 
+    /* never again
     let display
     if (this.state.selectedUnit != 0) {
       let unit = this.props.units.find((obj) => { return obj.id == this.state.selectedUnit })
       display = <UnitDisplay unit={unit} position={{ x: this.state.oldMouse.x, y: this.state.oldMouse.y }} />
     }
-    console.log(display)
+    console.log(display)*/
 
     return (
       <div id='grid-container'>
-        <div id='control-buttons-container' style={{ position: 'absolute', top: '5px', right: '5px' }}>
-          <IconButton
-          onTouchTap={this.handleMinimize.bind(this)}
-          >
-            <MinimizeIcon color={blueGrey900} hoverColor={grey700} />
-          </IconButton>
-          <IconButton
-            onTouchTap={this.handleMaximize.bind(this)}
-          >
-            <MaximizeIcon color={blueGrey900} hoverColor={grey700} />
-          </IconButton>
-          <IconButton
-            onTouchTap={this.handleClose.bind(this)}
-          >
-            <CloseIcon color={blueGrey900} hoverColor={grey700} />
-          </IconButton>
-        </div>
-        <div id='display-container'>
-          {display}
-        </div>
         <div id='canvas-container'
           onMouseDown={this.onMouseDown.bind(this)}
           onMouseUp={this.onMouseUp.bind(this)}
