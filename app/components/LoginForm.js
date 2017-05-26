@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react'
+import WebSocket from 'ws'
 
 import { pages } from '../actions/pageActions.js'
 
@@ -89,9 +90,9 @@ export default class LoginForm extends Component {
 
     console.log(user + ", " + pass)
 
-    var ws = new WebSocket("ws://" + this.state.endpoint)
+    var ws = new WebSocket('ws://' + user + ':' + name + '@' + this.state.endpoint)
 
-    ws.onopen = (e) => {
+    ws.on('open', () => {
       // succesfully connected to endpoint
       console.log('login submitted')
 
@@ -103,18 +104,21 @@ export default class LoginForm extends Component {
       this.setState({
         dispatched: true
       })
-    }
+    })
 
-    ws.onmessage = (e) => {
+    ws.on('message', (data) => {
       // TODO: handle messages, which leads to changing state
-      console.log('message: ' + e.data)
-    }
+      console.log('message: ' + data)
 
-    ws.onerror = (e) => {
+      var json = JSON.parse(data)
+      this.props.onAddUnit('youmu', json.vertices, json.position.x, json.position.y, json.owner)
+    })
+
+    ws.on('error', (e) => {
       // error while connecting to endpoint
       // NOTE: probably because endpoint does not have a lolirift server
       // TODO: tell user that he has to try antother endpoint
-    }
+    })
   }
 
   handleUser = (e) => {
