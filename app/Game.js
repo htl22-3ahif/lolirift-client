@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
 
-import GridContainer from './containers/GridContainer'
+import { blueGrey900, grey700 } from 'material-ui/styles/colors'
+
+import Navigation from './components/Navigation.js'
+import GridContainer from './containers/GridContainer.js'
 
 export default class Game extends Component {
   render () {
     return (
       <div>
+        <Navigation color={blueGrey900} hoverColor={grey700} />
         <GridContainer />
       </div>
     )

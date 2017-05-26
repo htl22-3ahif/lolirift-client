@@ -3,14 +3,9 @@ import WebSocket from 'ws'
 
 import { pages } from '../actions/pageActions.js'
 
-import IconButton from 'material-ui/IconButton'
-import CloseIcon from 'material-ui/svg-icons/navigation/close'
-import MinimizeIcon from 'material-ui/svg-icons/navigation/fullscreen-exit'
-import MaximizeIcon from 'material-ui/svg-icons/navigation/fullscreen'
 import Paper from 'material-ui/Paper'
 import TextField from 'material-ui/TextField'
 import FlatButton from 'material-ui/FlatButton'
-import { blueGrey50, blue200 } from 'material-ui/styles/colors'
 
 export default class LoginForm extends Component {
 
@@ -146,23 +141,6 @@ export default class LoginForm extends Component {
     }
   }
 
-  handleMinimize() {
-    let window = require('electron').remote.getCurrentWindow().minimize()
-  }
-
-  handleMaximize() {
-    let window = require('electron').remote.getCurrentWindow()
-    if (!window.isMaximized()) {
-      window.maximize()
-    } else {
-      window.unmaximize()
-    }
-  }
-
-  handleClose() {
-    let window = require('electron').remote.getCurrentWindow().close()
-  }
-
   render () {
     console.log('render loginform')
     console.log(this.props)
@@ -173,62 +151,39 @@ export default class LoginForm extends Component {
 
     return (
       <div id='login-container'>
-      <div id='control-buttons-container' style={{ position: 'absolute', top: '5px', right: '5px' }}>
-        <IconButton
-        onTouchTap={this.handleMinimize.bind(this)}
-        >
-          <MinimizeIcon color={blueGrey50} hoverColor={blue200} />
-        </IconButton>
-        <IconButton
-        onTouchTap={this.handleMaximize.bind(this)}
-        >
-          <MaximizeIcon color={blueGrey50} hoverColor={blue200} />
-        </IconButton>
-        <IconButton
-          onTouchTap={this.handleClose.bind(this)}
-        >
-          <CloseIcon color={blueGrey50} hoverColor={blue200} />
-        </IconButton>
-      </div>
-      <div id='paper-container'>
-        <Paper
-        style={paperStyle}
-        >
-          <h1>Ready to rift?</h1>
-          <div id='textfields'>
-            <TextField
-              ref='endpoint'
-              hintText='Endpoint'
-              style={textFieldStyle}
-              onKeyDown={this.handleUser.bind(this)}
-            />
-            <TextField
-              ref='name'
-              hintText='Name'
-              style={textFieldStyle}
-              onKeyDown={this.handleUser.bind(this)}
-            />
-            <TextField
-              ref='pass'
-              type='password'
-              hintText='Password'
-              style={textFieldStyle}
-              onKeyDown={this.handlePass.bind(this)}
-            />
-          </div>
-          <div id='footer'>
-            <div id='footer-send'>
-              <FlatButton
-                label='login'
-                //fullWidth={true}
-                hoverColor='#546E7A'
-                style={buttonStyle}
-                onTouchTap={this.handleSubmit.bind(this)}
+        <div id='paper-container'>
+          <Paper
+          style={paperStyle}
+          >
+            <h1>Ready to rift?</h1>
+            <div id='textfields'>
+              <TextField
+                ref='name'
+                hintText='Name'
+                style={textFieldStyle}
+                onKeyDown={this.handleUser.bind(this)}
+              />
+              <TextField
+                ref='pass'
+                type='password'
+                hintText='Password'
+                style={textFieldStyle}
+                onKeyDown={this.handlePass.bind(this)}
               />
             </div>
-          </div>
-        </Paper>
-      </div>
+            <div id='footer'>
+              <div id='footer-send'>
+                <FlatButton
+                  label='login'
+                  //fullWidth={true}
+                  hoverColor='#546E7A'
+                  style={buttonStyle}
+                  onTouchTap={this.handleSubmit.bind(this)}
+                />
+              </div>
+            </div>
+          </Paper>
+        </div>
       </div>
     )
   }
