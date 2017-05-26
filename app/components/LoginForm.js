@@ -84,10 +84,10 @@ export default class LoginForm extends Component {
   }
 
   handleSubmit = () => {
-    var user = this.refs.name.value
-    var pass = this.refs.pass.value
+    var user = this.refs.name.getValue()
+    var pass = this.refs.pass.getValue()
 
-    console.log(user + ", " + pass)
+    console.log(user + ', ' + pass)
 
     var ws = new WebSocket("ws://" + this.state.endpoint)
 
@@ -163,19 +163,16 @@ export default class LoginForm extends Component {
       <div id='control-buttons-container' style={{ position: 'absolute', top: '5px', right: '5px' }}>
         <IconButton
         onTouchTap={this.handleMinimize.bind(this)}
-        style={{  }}
         >
           <MinimizeIcon color={blueGrey50} hoverColor={blue200} />
         </IconButton>
         <IconButton
         onTouchTap={this.handleMaximize.bind(this)}
-        style={{  }}
         >
           <MaximizeIcon color={blueGrey50} hoverColor={blue200} />
         </IconButton>
         <IconButton
           onTouchTap={this.handleClose.bind(this)}
-          style={{  }}
         >
           <CloseIcon color={blueGrey50} hoverColor={blue200} />
         </IconButton>
