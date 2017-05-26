@@ -125,15 +125,7 @@ export default class LoginForm extends Component {
     })
   }
 
-  handleUser = (e) => {
-    // enter key
-    if (e.which == 13) {
-      this.handleSubmit()
-      return
-    }
-  }
-
-  handlePass = (e) => {
+  handleInput = (e) => {
     // enter key
     if (e.which == 13) {
       this.handleSubmit()
@@ -158,17 +150,24 @@ export default class LoginForm extends Component {
             <h1>Ready to rift?</h1>
             <div id='textfields'>
               <TextField
+                defaultValue='localhost:8080'
+                ref='endpoint'
+                hintText='Endpoint'
+                style={textFieldStyle}
+                onKeyDown={this.handleInput.bind(this)}
+              />
+              <TextField
                 ref='name'
                 hintText='Name'
                 style={textFieldStyle}
-                onKeyDown={this.handleUser.bind(this)}
+                onKeyDown={this.handleInput.bind(this)}
               />
               <TextField
                 ref='pass'
                 type='password'
                 hintText='Password'
                 style={textFieldStyle}
-                onKeyDown={this.handlePass.bind(this)}
+                onKeyDown={this.handleInput.bind(this)}
               />
             </div>
             <div id='footer'>
