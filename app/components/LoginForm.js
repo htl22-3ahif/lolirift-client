@@ -90,7 +90,7 @@ export default class LoginForm extends Component {
 
     console.log(user + ', ' + pass)
 
-    var ws = new WebSocket('ws://' + user + ':' + name + '@' + this.state.endpoint)
+    var ws = new WebSocket('ws://' + user + ':' + pass + '@' + this.state.endpoint)
 
     ws.on('open', () => {
       // succesfully connected to endpoint
@@ -111,7 +111,15 @@ export default class LoginForm extends Component {
       console.log('message: ' + data)
 
       var json = JSON.parse(data)
-      this.props.onAddUnit('youmu', json.vertices, json.position.x, json.position.y, json.owner)
+      this.props.onAddUnit(
+        json.id,
+        json.owner,
+        json.position,
+        json.vertices,
+        json.stats,
+        json.actions,
+        'youmu'
+      )
     })
 
     ws.on('error', (e) => {
