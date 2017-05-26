@@ -87,10 +87,11 @@ export default class LoginForm extends Component {
   handleSubmit = () => {
     var user = this.refs.name.getValue()
     var pass = this.refs.pass.getValue()
+    var endp = this.refs.endpoint.getValue()
 
     console.log(user + ', ' + pass)
 
-    var ws = new WebSocket('ws://' + user + ':' + pass + '@' + this.state.endpoint)
+    var ws = new WebSocket('ws://' + user + ':' + pass + '@' + endp)
 
     ws.on('open', () => {
       // succesfully connected to endpoint
@@ -195,6 +196,12 @@ export default class LoginForm extends Component {
         >
           <h1>Ready to rift?</h1>
           <div id='textfields'>
+            <TextField
+              ref='endpoint'
+              hintText='Endpoint'
+              style={textFieldStyle}
+              onKeyDown={this.handleUser.bind(this)}
+            />
             <TextField
               ref='name'
               hintText='Name'
