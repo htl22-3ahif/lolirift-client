@@ -1,5 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 
+import UnitDisplay from './UnitDisplay.js'
+
 import IconButton from 'material-ui/IconButton'
 import CloseIcon from 'material-ui/svg-icons/navigation/close'
 import MinimizeIcon from 'material-ui/svg-icons/navigation/fullscreen-exit'
@@ -10,25 +12,19 @@ export default class Grid extends Component {
 
   static propTypes = {
     player: PropTypes.shape({
-      name: PropTypes.string
+      name: PropTypes.string.isRequired
     }).isRequired,
     units: PropTypes.arrayOf(
       PropTypes.shape({
-        name: PropTypes.string,
-        texture: PropTypes.string,
-        x: PropTypes.number,
-        y: PropTypes.number
+        name: PropTypes.string.isRequired,
+        texture: PropTypes.string.isRequired,
+        position: PropTypes.shape({
+          x: PropTypes.number.isRequired,
+          y: PropTypes.number.isRequired
+        }).isRequired
       })
     ).isRequired
-  }/*
-    points: PropTypes.arrayOf(
-      PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        x: PropTypes.number.isRequired,
-        y: PropTypes.number.isRequired
-      }).isRequired
-    ).isRequired
-  }*/
+  }
 
   constructor () {
     super()
@@ -40,6 +36,7 @@ export default class Grid extends Component {
       oldMouse: { x: 0, y: 0 },
       stride: { x: 40, y: 40 },
       selectedGrid: { x: 0, y: 0 },
+      selectedUnit: 0,
       lowerGridBoundary: { x: 0, y: 0 },
       upperGridBoundary: { x: 0, y: 0 }
     }
@@ -52,11 +49,11 @@ export default class Grid extends Component {
 
     // name, vertices, x, y, /*actions, state,*/ owner
     // id, owner, position, vertices, stats, actions, name
-    this.props.onAddUnit(1, this.props.player, { x: 5, y: 4 }, null, { health: 100 }, null, 'yuyuko')
+    this.props.onAddUnit(1, this.props.player.name, { x: 5, y: 4 }, null, { health: 100 }, null, 'yuyuko')
     console.log('dispatched unit (yuyuko)')
-    this.props.onAddUnit(2, this.props.player, { x: 6, y: 4 }, null, { health: 100 }, null, 'youmu')
+    this.props.onAddUnit(2, this.props.player.name, { x: 6, y: 4 }, null, { health: 100 }, null, 'youmu')
     console.log('dispatched unit (youmu)')
-    this.props.onAddUnit(3, this.props.player, { x: 1, y: 1 }, null, { health: 100 }, null, 'yukari')
+    this.props.onAddUnit(3, this.props.player.name, { x: 1, y: 1 }, null, { health: 100 }, null, 'yukari')
     console.log('dispatched unit (yukari)')
   }
 
@@ -201,6 +198,15 @@ export default class Grid extends Component {
         y: gridY
       }
     })
+
+    this.props.units.forEach((unit) => {
+      if (unit.position.x == this.state.selectedGrid.x
+        && unit.position.y == this.state.selectedGrid.y) {
+        this.setState({
+          selectedUnit: unit.id
+        })
+      }
+    })
   }
 
   onDoubleClick = (e) => {
@@ -322,47 +328,54 @@ export default class Grid extends Component {
     console.log(this.props);
     var styles = this.getStyles()
 
+    let display
+    if (this.state.selectedUnit != 0) {
+      let unit = this.props.units.find((obj) => { return obj.id == this.state.selectedUnit })
+      display = <UnitDisplay unit={unit} position={{ x: this.state.oldMouse.x, y: this.state.oldMouse.y }} />
+    }
+    console.log(display)
+
     return (
       <div id='grid-container'>
-      <div id='control-buttons-container' style={{ position: 'absolute', top: '5px', right: '5px' }}>
-        <IconButton
-        onTouchTap={this.handleMinimize.bind(this)}
-        style={{  }}
-        >
-          <MinimizeIcon color={blueGrey900} hoverColor={grey700} />
-        </IconButton>
-        <IconButton
-        onTouchTap={this.handleMaximize.bind(this)}
-        style={{  }}
-        >
-          <MaximizeIcon color={blueGrey900} hoverColor={grey700} />
-        </IconButton>
-        <IconButton
-          onTouchTap={this.handleClose.bind(this)}
-          style={{  }}
-        >
-          <CloseIcon color={blueGrey900} hoverColor={grey700} />
-        </IconButton>
-      </div>
-      <div id='canvas-container'
-        onMouseDown={this.onMouseDown.bind(this)}
-        onMouseUp={this.onMouseUp.bind(this)}
-        onMouseMove={this.onMouseMove.bind(this)}
-        onClick={this.onClick.bind(this)}
-        onDoubleClick={this.onDoubleClick.bind(this)}
-        onWheel={this.onWheel.bind(this)}
+        <div id='control-buttons-container' style={{ position: 'absolute', top: '5px', right: '5px' }}>
+          <IconButton
+          onTouchTap={this.handleMinimize.bind(this)}
+          >
+            <MinimizeIcon color={blueGrey900} hoverColor={grey700} />
+          </IconButton>
+          <IconButton
+            onTouchTap={this.handleMaximize.bind(this)}
+          >
+            <MaximizeIcon color={blueGrey900} hoverColor={grey700} />
+          </IconButton>
+          <IconButton
+            onTouchTap={this.handleClose.bind(this)}
+          >
+            <CloseIcon color={blueGrey900} hoverColor={grey700} />
+          </IconButton>
+        </div>
+        <div id='display-container'>
+          {display}
+        </div>
+        <div id='canvas-container'
+          onMouseDown={this.onMouseDown.bind(this)}
+          onMouseUp={this.onMouseUp.bind(this)}
+          onMouseMove={this.onMouseMove.bind(this)}
+          onClick={this.onClick.bind(this)}
+          onDoubleClick={this.onDoubleClick.bind(this)}
+          onWheel={this.onWheel.bind(this)}
 
-        style={styles}
-      >
-        <canvas
-          ref='canvas'
-          width={this.state.width}
-          height={this.state.height}
-          style={{ position:'absolute', zIndex: -1 }}
+          style={styles}
         >
-          Canvas is not supported
-        </canvas>
-      </div>
+          <canvas
+            ref='canvas'
+            width={this.state.width}
+            height={this.state.height}
+            style={{ position:'absolute', zIndex: -1 }}
+          >
+            Canvas is not supported
+          </canvas>
+        </div>
       </div>
     )
   }
