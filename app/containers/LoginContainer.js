@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { changePlayer } from '../actions/playerActions.js'
-import { addWs } from '../actions/wsAction.js'
+import { addWs } from '../actions/wsActions.js'
 import { togglePage } from '../actions/pageActions.js'
 import LoginForm from '../components/LoginForm'
 
@@ -19,6 +19,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     onTogglePage: (page) => {
       dispatch(togglePage(page))
+    },
+    onAddUnit: (id, owner, position, vertices, stats, actions, name) => {
+      dispatch(addUnit(id, owner, position, vertices, stats, actions, name))
     }
   }
 }
