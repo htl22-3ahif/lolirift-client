@@ -1,11 +1,16 @@
-import { ADD_WS } from '../actions'
+import { SET_WS, UNSET_WS } from '../actions/wsActions.js'
 
-const ws = (state = {}, action) => {
+const ws = (state = null, action) => {
   switch (action.type) {
-    case ADD_WS:
+    case SET_WS:
       return action.ws
+
+    case UNSET_WS:
+      return undefined
 
     default:
       return state
   }
 }
+
+export default ws
