@@ -1,20 +1,20 @@
 import React, { Component, PropTypes } from 'react'
-import WebSocket from 'ws'
 
 import Paper from 'material-ui/Paper'
 import TextField from 'material-ui/TextField'
 import FlatButton from 'material-ui/FlatButton'
 
-export default class LoginForm extends Component {
+export default class Form extends Component {
 
-  static propTypes = {}
+  static propTypes = {
+    onSubmit: PropTypes.func.isRequired
+  }
 
   constructor (props) {
     super(props)
     this.state = {
       width: window.innerWidth,
-      height: window.innerHeight,
-      endpoint: 'localhost:8080/'
+      height: window.innerHeight
     }
     window.addEventListener('resize', this.onResize.bind(this))
   }
@@ -66,57 +66,49 @@ export default class LoginForm extends Component {
     })
   }
 
-  handleSubmit = () => {
-    var user = this.refs.name.getValue()
-    var pass = this.refs.pass.getValue()
-    var endp = this.refs.endpoint.getValue()
-
-    var ws = new WebSocket('ws://' + user + ':' + pass + '@' + endp)
-
-    ws.on('open', () => {
-      // succesfully connected to endpoint
-
-      this.props.onSetPlayer(user, pass)
-      this.props.onSetWs(ws)
-    })
-
-    ws.on('message', (data) => {
-      // TODO: handle messages, which leads to changing state
-      console.log('message: ' + data)
-
-      var json = JSON.parse(data)
-      this.props.onAddUnit(
-        json.id,
-        json.owner,
-        json.position,
-        json.vertices,
-        json.stats,
-        json.actions,
-        'youmu'
-      )
-    })
-
-    ws.on('error', (e) => {
-      // error while connecting to endpoint
-      // NOTE: probably because endpoint does not have a lolirift server
-      // TODO: tell user that he has to try antother endpoint
-
-      this.props.onUnsetWs()
-    })
-  }
-
   handleInput = (e) => {
     // enter key
-    if (e.which == 13) {
-      this.handleSubmit()
-      return
-    }
+    if (e.which == 13)
+      this.submit()
+  }
+
+  submit = () => {
+    this.props.onSubmit(
+      this.refs.endp.getValue(),
+      this.refs.name.getValue(),
+      this.refs.pass.getValue()
+    )
   }
 
   render () {
     const paperStyle = this.getPaperStyles()
     const textFieldStyle = this.getTextFieldStyles()
     const buttonStyle = this.getButtonStyles()
+
+    var endp = <TextField
+      defaultValue='localhost:8080'
+      ref='endp'
+      hintText='Endpoint'
+      style={textFieldStyle}
+      onKeyDown={this.handleInput.bind(this)}
+    />
+
+    var name = <TextField
+      ref='name'
+      hintText='Name'
+      style={textFieldStyle}
+      onKeyDown={this.handleInput.bind(this)}
+    />
+
+    var pass = <TextField
+      ref='pass'
+      type='password'
+      hintText='Password'
+      style={textFieldStyle}
+      onKeyDown={this.handleInput.bind(this)}
+    />
+
+    console.log(endp)
 
     return (
       <div id='login-container'>
@@ -126,28 +118,13 @@ export default class LoginForm extends Component {
             <h1>Ready to rift?</h1>
 
             <div id='textfields'>
-              <TextField
-                defaultValue='localhost:8080'
-                ref='endpoint'
-                hintText='Endpoint'
-                style={textFieldStyle}
-                onKeyDown={this.handleInput.bind(this)}
-              />
 
-              <TextField
-                ref='name'
-                hintText='Name'
-                style={textFieldStyle}
-                onKeyDown={this.handleInput.bind(this)}
-              />
+               { endp }
 
-              <TextField
-                ref='pass'
-                type='password'
-                hintText='Password'
-                style={textFieldStyle}
-                onKeyDown={this.handleInput.bind(this)}
-              />
+               { name }
+
+               { pass }
+
             </div>
 
             <FlatButton
@@ -155,7 +132,7 @@ export default class LoginForm extends Component {
               //fullWidth={true}
               hoverColor='#546E7A'
               style={buttonStyle}
-              onTouchTap={this.handleSubmit.bind(this)}
+              onTouchTap={this.submit.bind(this)}
             />
 
           </Paper>

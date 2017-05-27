@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { pages } from './actions/pageActions.js'
 
 import Game from './Game.js'
-import Login from './Login.js'
+import LoginContainer from './containers/LoginContainer'
 
 class App extends Component {
   constructor() {
@@ -15,7 +14,7 @@ class App extends Component {
     return (
       <div>
         { this.props.ws != null && <Game /> }
-        { this.props.ws == null && <Login /> }
+        { this.props.ws == null && <LoginContainer /> }
       </div>
     )
   }

@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { setPlayer, setWs, addUnit } from '../actions'
 
-import LoginForm from '../components/LoginForm'
+import Login from '../components/Login'
 
 const mapStateToProps = (state) => {
   return {}
@@ -27,6 +27,6 @@ const mapDispatchToProps = (dispatch) => {
 const LoginContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(LoginForm)
+)(Login)
 
 export default LoginContainer
