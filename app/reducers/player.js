@@ -1,8 +1,8 @@
-import { CHANGE_PLAYER } from '../actions/playerActions.js'
+import { SET_PLAYER } from '../actions'
 
 const player = (state = {}, action) => {
   switch (action.type) {
-    case CHANGE_PLAYER:
+    case SET_PLAYER:
       return {
         name: action.name,
         pass: action.pass

@@ -1,9 +1,9 @@
 import { connect } from 'react-redux'
-import { addUnit } from '../actions/unitActions.js'
+import { addUnit } from '../actions'
+
 import Grid from '../components/Grid'
 
 const mapStateToProps = (state) => {
-  console.log('mapping state to grid props!! AAAA')
   return {
     units: state.units,
     player: state.player

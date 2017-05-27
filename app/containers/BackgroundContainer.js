@@ -1,4 +1,5 @@
 import { connect } from 'react-redux'
+
 import Background from '../components/Background'
 
 const mapStateToProps = (state) => {

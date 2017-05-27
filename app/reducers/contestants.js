@@ -14,7 +14,7 @@ const contestant = (state = {}, action) => {
 
 const contestants = (state = [], action) => {
   switch (action.type) {
-    case ADD_CONTESTANTS:
+    case ADD_CONTESTANT:
       return [
         ...state,
         contestant(undefined, action)

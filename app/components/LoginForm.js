@@ -1,8 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import WebSocket from 'ws'
 
-import { pages } from '../actions/pageActions.js'
-
 import Paper from 'material-ui/Paper'
 import TextField from 'material-ui/TextField'
 import FlatButton from 'material-ui/FlatButton'
@@ -78,7 +76,7 @@ export default class LoginForm extends Component {
     ws.on('open', () => {
       // succesfully connected to endpoint
 
-      this.props.onChangePlayer(user, pass)
+      this.props.onSetPlayer(user, pass)
       this.props.onSetWs(ws)
     })
 

@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux'
-import player from './player.js'
-import contestants from './contestant.js'
-import units from './unit.js'
-import page from './page.js'
-import ws from './ws.js'
+import player from './player'
+import contestants from './contestants'
+import units from './units'
+import page from './page'
+import ws from './ws'
 
 const world = combineReducers({
   player,

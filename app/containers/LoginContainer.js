@@ -1,8 +1,6 @@
 import { connect } from 'react-redux'
-import { changePlayer } from '../actions/playerActions.js'
-import { setWs } from '../actions/wsActions.js'
-import { togglePage } from '../actions/pageActions.js'
-import { addUnit } from '../actions/unitActions.js'
+import { setPlayer, setWs, addUnit } from '../actions'
+
 import LoginForm from '../components/LoginForm'
 
 const mapStateToProps = (state) => {
@@ -11,17 +9,17 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onChangePlayer: (name, pass) => {
-      dispatch(changePlayer(name, pass))
+    onSetPlayer: (name, pass) => {
+      dispatch(setPlayer(name, pass))
+    },
+    onAddUnit: (id, owner, position, vertices, stats, actions, name) => {
+      dispatch(addUnit(id, owner, position, vertices, stats, actions, name))
     },
     onSetWs: (ws) => {
       dispatch(setWs(ws))
     },
     onUnsetWs: () => {
       dispatch(unsetWs())
-    },
-    onAddUnit: (id, owner, position, vertices, stats, actions, name) => {
-      dispatch(addUnit(id, owner, position, vertices, stats, actions, name))
     }
   }
 }
