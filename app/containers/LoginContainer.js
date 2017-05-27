@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import { changePlayer } from '../actions/playerActions.js'
 import { addWs } from '../actions/wsActions.js'
+import { addUnit } from '../actions/unitActions.js'
 import { togglePage } from '../actions/pageActions.js'
 import LoginForm from '../components/LoginForm'
 
