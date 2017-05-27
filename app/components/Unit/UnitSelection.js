@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 
-export default class Navigation extends Component {
+export default class UnitSeleciton extends Component {
 
   static propTypes = {}
 
@@ -11,6 +11,6 @@ export default class Navigation extends Component {
   componentDidMount () {}
 
   render () {
-    
+
   }
 }

@@ -3,6 +3,7 @@ import player from './player.js'
 import contestants from './contestant.js'
 import units from './unit.js'
 import page from './page.js'
+import { origin, selection } from './ui.js'
 import ws from './ws.js'
 
 const world = combineReducers({
@@ -10,6 +11,8 @@ const world = combineReducers({
   contestants,
   units,
   page,
+  origin,
+  selection,
   ws
 })
 

@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import { changePlayer } from '../actions/playerActions.js'
+import { addUnit } from '../actions/unitActions.js'
 import { setWs } from '../actions/wsActions.js'
 import { togglePage } from '../actions/pageActions.js'
 import { addUnit } from '../actions/unitActions.js'
