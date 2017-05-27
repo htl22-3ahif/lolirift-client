@@ -4,7 +4,6 @@ import IconButton from 'material-ui/IconButton'
 import CloseIcon from 'material-ui/svg-icons/navigation/close'
 import MinimizeIcon from 'material-ui/svg-icons/navigation/fullscreen-exit'
 import MaximizeIcon from 'material-ui/svg-icons/navigation/fullscreen'
-import LogoutIcon from 'material-ui/svg-icons/action/exit-to-app'
 
 export default class Navigation extends Component {
 
@@ -18,10 +17,6 @@ export default class Navigation extends Component {
   }
 
   componentDidMount () {}
-
-  handleLogoff() {
-
-  }
 
   handleMinimize() {
     let window = require('electron').remote.getCurrentWindow().minimize()
@@ -43,13 +38,6 @@ export default class Navigation extends Component {
   render () {
     return (
       <div id='control-buttons-container' style={{ position: 'absolute', top: '5px', right: '5px' }}>
-        <IconButton onTouchTap={this.handleMinimize.bind(this)}>
-          <LogoutIcon
-            color={this.props.color}
-            hoverColor={this.props.hoverColor}
-          />
-        </IconButton>
-
         <IconButton onTouchTap={this.handleMinimize.bind(this)}>
           <MinimizeIcon
             color={this.props.color}
