@@ -311,17 +311,9 @@ export default class Grid extends Component {
   }
 
   render () {
-    console.log('render');
+    console.log('rendering grid');
     console.log(this.props);
     var styles = this.getStyles()
-
-    /* never again
-    let display
-    if (this.state.selectedUnit != 0) {
-      let unit = this.props.units.find((obj) => { return obj.id == this.state.selectedUnit })
-      display = <UnitDisplay unit={unit} position={{ x: this.state.oldMouse.x, y: this.state.oldMouse.y }} />
-    }
-    console.log(display)*/
 
     return (
       <div id='grid-container'>
