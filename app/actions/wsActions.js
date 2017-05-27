@@ -1,8 +1,15 @@
-export const ADD_WS = 'ADD_WS'
+export const SET_WS = 'SET_WS'
+export const UNSET_WS = 'UNSET_WS'
 
-export const addWs = (ws) => {
+export const setWs = (ws) => {
   return {
-    type: ADD_WS,
+    type: SET_WS,
     ws
+  }
+}
+
+export const unsetWs = () => {
+  return {
+    type: UNSET_WS
   }
 }

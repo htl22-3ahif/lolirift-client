@@ -95,7 +95,7 @@ export default class LoginForm extends Component {
       var player = this.props.onChangePlayer(user, pass)
       console.log('dispatched changePlayer ' + player)
 
-      this.props.onAddWs(ws)
+      this.props.onSetWs(ws)
 
       this.setState({
         dispatched: true

@@ -38,20 +38,25 @@ export default class Navigation extends Component {
   render () {
     return (
       <div id='control-buttons-container' style={{ position: 'absolute', top: '5px', right: '5px' }}>
-        <IconButton
-        onTouchTap={this.handleMinimize.bind(this)}
-        >
-          <MinimizeIcon color={this.props.color} hoverColor={this.props.hoverColor} />
+        <IconButton onTouchTap={this.handleMinimize.bind(this)}>
+          <MinimizeIcon
+            color={this.props.color}
+            hoverColor={this.props.hoverColor}
+          />
         </IconButton>
-        <IconButton
-          onTouchTap={this.handleMaximize.bind(this)}
-        >
-          <MaximizeIcon color={this.props.color} hoverColor={this.props.hoverColor} />
+
+        <IconButton onTouchTap={this.handleMaximize.bind(this)}>
+          <MaximizeIcon
+            color={this.props.color}
+            hoverColor={this.props.hoverColor}
+          />
         </IconButton>
-        <IconButton
-          onTouchTap={this.handleClose.bind(this)}
-        >
-          <CloseIcon color={this.props.color} hoverColor={this.props.hoverColor} />
+
+        <IconButton onTouchTap={this.handleClose.bind(this)}>
+          <CloseIcon
+            color={this.props.color}
+            hoverColor={this.props.hoverColor}
+          />
         </IconButton>
       </div>
     )
