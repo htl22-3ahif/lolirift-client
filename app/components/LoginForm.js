@@ -16,20 +16,9 @@ export default class LoginForm extends Component {
     this.state = {
       width: window.innerWidth,
       height: window.innerHeight,
-      endpoint: 'localhost:8080/',
-      dispatched: false
+      endpoint: 'localhost:8080/'
     }
     window.addEventListener('resize', this.onResize.bind(this))
-  }
-
-  componentDidMount () {}
-
-  componentDidUpdate () {
-    if (this.state.dispatched) {
-      // TODO: validate user input (ignoring for now)
-      this.props.onTogglePage(pages.SHOW_GAME)
-      console.log('dispatched page toggle (SHOW_GAME)')
-    }
   }
 
   getPaperStyles () {
@@ -84,22 +73,13 @@ export default class LoginForm extends Component {
     var pass = this.refs.pass.getValue()
     var endp = this.refs.endpoint.getValue()
 
-    console.log(user + ', ' + pass)
-
     var ws = new WebSocket('ws://' + user + ':' + pass + '@' + endp)
 
     ws.on('open', () => {
       // succesfully connected to endpoint
-      console.log('login submitted')
 
-      var player = this.props.onChangePlayer(user, pass)
-      console.log('dispatched changePlayer ' + player)
-
+      this.props.onChangePlayer(user, pass)
       this.props.onSetWs(ws)
-
-      this.setState({
-        dispatched: true
-      })
     })
 
     ws.on('message', (data) => {
@@ -122,6 +102,8 @@ export default class LoginForm extends Component {
       // error while connecting to endpoint
       // NOTE: probably because endpoint does not have a lolirift server
       // TODO: tell user that he has to try antother endpoint
+
+      this.props.onUnsetWs()
     })
   }
 
@@ -134,9 +116,6 @@ export default class LoginForm extends Component {
   }
 
   render () {
-    console.log('render loginform')
-    console.log(this.props)
-
     const paperStyle = this.getPaperStyles()
     const textFieldStyle = this.getTextFieldStyles()
     const buttonStyle = this.getButtonStyles()
@@ -144,10 +123,10 @@ export default class LoginForm extends Component {
     return (
       <div id='login-container'>
         <div id='paper-container'>
-          <Paper
-          style={paperStyle}
-          >
+          <Paper style={paperStyle}>
+
             <h1>Ready to rift?</h1>
+
             <div id='textfields'>
               <TextField
                 defaultValue='localhost:8080'
@@ -156,12 +135,14 @@ export default class LoginForm extends Component {
                 style={textFieldStyle}
                 onKeyDown={this.handleInput.bind(this)}
               />
+
               <TextField
                 ref='name'
                 hintText='Name'
                 style={textFieldStyle}
                 onKeyDown={this.handleInput.bind(this)}
               />
+
               <TextField
                 ref='pass'
                 type='password'
@@ -170,17 +151,15 @@ export default class LoginForm extends Component {
                 onKeyDown={this.handleInput.bind(this)}
               />
             </div>
-            <div id='footer'>
-              <div id='footer-send'>
-                <FlatButton
-                  label='login'
-                  //fullWidth={true}
-                  hoverColor='#546E7A'
-                  style={buttonStyle}
-                  onTouchTap={this.handleSubmit.bind(this)}
-                />
-              </div>
-            </div>
+
+            <FlatButton
+              label='login'
+              //fullWidth={true}
+              hoverColor='#546E7A'
+              style={buttonStyle}
+              onTouchTap={this.handleSubmit.bind(this)}
+            />
+
           </Paper>
         </div>
       </div>

@@ -13,13 +13,12 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onChangePlayer: (name, pass) => {
       dispatch(changePlayer(name, pass))
-      return name
     },
     onSetWs: (ws) => {
       dispatch(setWs(ws))
     },
-    onTogglePage: (page) => {
-      dispatch(togglePage(page))
+    onUnsetWs: () => {
+      dispatch(unsetWs())
     },
     onAddUnit: (id, owner, position, vertices, stats, actions, name) => {
       dispatch(addUnit(id, owner, position, vertices, stats, actions, name))

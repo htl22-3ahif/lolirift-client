@@ -14,8 +14,8 @@ class App extends Component {
   render () {
     return (
       <div>
-        { this.props.page == pages.SHOW_GAME && <Game /> }
-        { this.props.page == pages.SHOW_LOGIN && <Login /> }
+        { this.props.ws != null && <Game /> }
+        { this.props.ws == null && <Login /> }
       </div>
     )
   }
@@ -23,7 +23,7 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    page: state.page
+    ws: state.ws
   }
 }
 
