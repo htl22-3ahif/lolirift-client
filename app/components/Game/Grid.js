@@ -5,9 +5,6 @@ import React, { Component, PropTypes } from 'react'
 export default class Grid extends Component {
 
   static propTypes = {
-    player: PropTypes.shape({
-      name: PropTypes.string.isRequired
-    }).isRequired,
     units: PropTypes.arrayOf(
       PropTypes.shape({
         name: PropTypes.string.isRequired,
@@ -40,15 +37,6 @@ export default class Grid extends Component {
 
   componentDidMount () {
     this.updateCanvas()
-
-    // name, vertices, x, y, /*actions, state,*/ owner
-    // id, owner, position, vertices, stats, actions, name
-    this.props.onAddUnit(1, this.props.player.name, { x: 5, y: 4 }, null, { health: 100 }, null, 'yuyuko')
-    console.log('dispatched unit (yuyuko)')
-    this.props.onAddUnit(2, this.props.player.name, { x: 6, y: 4 }, null, { health: 100 }, null, 'youmu')
-    console.log('dispatched unit (youmu)')
-    this.props.onAddUnit(3, this.props.player.name, { x: 1, y: 1 }, null, { health: 100 }, null, 'yukari')
-    console.log('dispatched unit (yukari)')
   }
 
   componentDidUpdate () {

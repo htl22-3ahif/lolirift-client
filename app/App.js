@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
+import { blueGrey900, grey700 } from 'material-ui/styles/colors'
 
-import Game from './Game.js'
+import Navigation from './components/Navigation'
+import GameContainer from './containers/GameContainer'
 import LoginContainer from './containers/LoginContainer'
 
 class App extends Component {
@@ -13,8 +15,9 @@ class App extends Component {
   render () {
     return (
       <div>
-        { this.props.ws != null && <Game /> }
+        <Navigation color={blueGrey900} hoverColor={grey700}/>
         { this.props.ws == null && <LoginContainer /> }
+        { this.props.ws != null && <GameContainer /> }
       </div>
     )
   }
