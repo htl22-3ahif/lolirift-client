@@ -95,13 +95,7 @@ export default class Grid extends Component {
           && unit.position.x <= this.state.origin.boundaries.upper.x
           && unit.position.y >= this.state.origin.boundaries.lower.y
           && unit.position.y <= this.state.origin.boundaries.upper.y) {
-          if (unit.texture) {
-            this.drawImg(unit.position.x, unit.position.y, unit.texture)
-          }
-          /* else {
-            this.drawVertices(...args)
-          }
-          */
+          this.drawVertices(unit, unit.texture)
         }
       })
     }
@@ -178,6 +172,13 @@ export default class Grid extends Component {
     var yoffset = (width > height) ? ((width - height) / 2) * factor : 0
 
     ctx.drawImage(drawing, x + xoffset, y + yoffset, width * factor, height * factor)
+  }
+
+  drawVertices (unit, src) {
+    this.drawImg(unit.position.x, unit.position.y, src)
+    unit.vertices.forEach((position) => {
+      this.drawImg(unit.position.x + position.x, unit.position.y + position.y, src)
+    })
   }
 
   onClick = (e) => {

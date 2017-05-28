@@ -10,7 +10,7 @@ const unit = (state = {}, action) => {
         vertices: action.vertices,
         stats: action.stats,
         actions: action.actions,
-        name: action.name,
+        type: action.type,
         texture: action.texture
       }
 

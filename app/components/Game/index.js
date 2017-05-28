@@ -1,7 +1,9 @@
 import React, { Component, PropTypes } from 'react'
 
+import { blueGrey900, grey700 } from 'material-ui/styles/colors'
 import { red500, green500 } from 'material-ui/styles/colors'
 
+import Navigation from '../Navigation'
 import Grid from './Grid'
 import Map from './Map'
 
@@ -50,6 +52,7 @@ export default class Game extends Component {
   render () {
     return (
       <div>
+        <Navigation color={blueGrey900} hoverColor={grey700} />
         <Grid
           units={this.props.units}
           onSetOrigin={this.onSetOrigin.bind(this)}

@@ -16,7 +16,7 @@ export const addContestant = (name) => {
 }
 
 export const ADD_UNIT = 'ADD_UNIT'
-export const addUnit = (id, owner, position, vertices, stats, actions, name) => {
+export const addUnit = (id, owner, position, vertices, stats, actions, type) => {
   return {
     type: ADD_UNIT,
     id: id,
@@ -28,8 +28,8 @@ export const addUnit = (id, owner, position, vertices, stats, actions, name) => 
     vertices: vertices,
     stats: stats,
     actions: actions,
-    name: name,
-    texture: 'resources/' + name + '.png'
+    type: type,
+    texture: 'resources/' + type + '.png'
   }
 }
 

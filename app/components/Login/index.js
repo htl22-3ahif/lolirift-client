@@ -1,6 +1,9 @@
 import React, { Component, PropTypes } from 'react'
 import WebSocket from 'ws'
 
+import { blueGrey50, blue200 } from 'material-ui/styles/colors'
+
+import Navigation from '../Navigation'
 import Background from './Background'
 import Form from './Form'
 
@@ -68,8 +71,9 @@ export default class Login extends Component {
   render () {
     return (
       <div>
+        <Navigation color={blueGrey50} hoverColor={blue200} />
         <Background />
-        <Form onSubmit={this.login.bind(this)}/>
+        <Form onSubmit={this.login.bind(this)} />
       </div>
     )
   }
