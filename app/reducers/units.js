@@ -1,4 +1,4 @@
-import { ADD_UNIT } from '../actions/unitActions.js'
+import { ADD_UNIT } from '../actions'
 import players from './player'
 
 const unit = (state = {}, action) => {
@@ -11,7 +11,7 @@ const unit = (state = {}, action) => {
         position: action.position,
         vertices: action.vertices,
         stats: action.stats,
-        actions: action.stats,
+        actions: action.actions,
         name: action.name,
         texture: action.texture
       }

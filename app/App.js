@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { pages } from './actions/pageActions.js'
+import { blueGrey900, grey700 } from 'material-ui/styles/colors'
 
-import Game from './Game.js'
-import Login from './Login.js'
+import Navigation from './components/Navigation'
+import GameContainer from './containers/GameContainer'
+import LoginContainer from './containers/LoginContainer'
 
 class App extends Component {
   constructor() {
@@ -14,8 +15,9 @@ class App extends Component {
   render () {
     return (
       <div>
-        { this.props.page == pages.SHOW_GAME && <Game /> }
-        { this.props.page == pages.SHOW_LOGIN && <Login /> }
+        <Navigation color={blueGrey900} hoverColor={grey700}/>
+        { this.props.ws == null && <LoginContainer /> }
+        { this.props.ws != null && <GameContainer /> }
       </div>
     )
   }
@@ -23,7 +25,7 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    page: state.page
+    ws: state.ws
   }
 }
 

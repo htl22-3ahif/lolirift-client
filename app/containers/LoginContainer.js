@@ -1,9 +1,7 @@
 import { connect } from 'react-redux'
-import { changePlayer } from '../actions/playerActions.js'
-import { addUnit } from '../actions/unitActions.js'
-import { setWs } from '../actions/wsActions.js'
-import { togglePage } from '../actions/pageActions.js'
-import LoginForm from '../components/LoginForm'
+import { setPlayer, setWs, addUnit, unsetWs } from '../actions'
+
+import Login from '../components/Login'
 
 const mapStateToProps = (state) => {
   return {}
@@ -11,18 +9,17 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onChangePlayer: (name, pass) => {
-      dispatch(changePlayer(name, pass))
-      return name
+    onSetPlayer: (name, pass) => {
+      dispatch(setPlayer(name, pass))
+    },
+    onAddUnit: (id, owner, position, vertices, stats, actions, name) => {
+      dispatch(addUnit(id, owner, position, vertices, stats, actions, name))
     },
     onSetWs: (ws) => {
       dispatch(setWs(ws))
     },
-    onTogglePage: (page) => {
-      dispatch(togglePage(page))
-    },
-    onAddUnit: (id, owner, position, vertices, stats, actions, name) => {
-      dispatch(addUnit(id, owner, position, vertices, stats, actions, name))
+    onUnsetWs: () => {
+      dispatch(unsetWs())
     }
   }
 }
@@ -30,6 +27,6 @@ const mapDispatchToProps = (dispatch) => {
 const LoginContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(LoginForm)
+)(Login)
 
 export default LoginContainer
