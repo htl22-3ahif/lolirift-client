@@ -42,11 +42,11 @@ export default class Login extends Component {
         this.props.onAddUnit(
           u.id,
           u.owner,
+          'youmu',
           u.position,
           u.vertices,
           u.stats,
-          u.actions,
-          'youmu'
+          u.actions
         )
       })
 

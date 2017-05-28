@@ -19,9 +19,9 @@ export const origin = (state = initialOrigin, action) => {
   switch (action.type) {
     case CHANGE_ORIGIN:
       return {
-        x: action.x,
-        y: action.y,
-        boundaries: action.boundaries
+        x: action.payload.x,
+        y: action.payload.y,
+        boundaries: action.payload.boundaries
       }
 
     default:
@@ -33,7 +33,7 @@ export const selection = (state = {}, action) => {
   switch (action.type) {
     case CHANGE_SELECTION:
       return {
-        selected: action.selected
+        selected: action.payload.selected
       }
 
     default:
