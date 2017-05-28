@@ -12,8 +12,8 @@ const mapDispatchToProps = (dispatch) => {
     onSetPlayer: (name, pass) => {
       dispatch(setPlayer(name, pass))
     },
-    onAddUnit: (id, owner, position, vertices, stats, actions, name) => {
-      dispatch(addUnit(id, owner, position, vertices, stats, actions, name))
+    onAddUnit: (id, owner, type, position, vertices, stats, actions) => {
+      dispatch(addUnit(id, owner, type, position, vertices, stats, actions))
     },
     onAddAction: (name, paramTypes) => {
       dispatch(addAction(name, paramTypes))

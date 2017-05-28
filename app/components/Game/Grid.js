@@ -7,7 +7,8 @@ export default class Grid extends Component {
   static propTypes = {
     units: PropTypes.arrayOf(
       PropTypes.shape({
-        name: PropTypes.string.isRequired,
+        owner: PropTypes.string.isRequired,
+        type: PropTypes.string.isRequired,
         texture: PropTypes.string.isRequired,
         position: PropTypes.shape({
           x: PropTypes.number.isRequired,
@@ -47,7 +48,7 @@ export default class Grid extends Component {
   }
 
   componentDidMount () {
-    this.props.onSetOrigin(this.state.origin)
+    this.props.onSetOrigin(this.props.origin)
 
     this.updateCanvas()
   }
@@ -64,8 +65,8 @@ export default class Grid extends Component {
 
     // draw gridlines on x
     {
-      var num = Math.floor(this.state.origin.x / this.state.stride.x)
-      var offset = this.state.origin.x - (this.state.stride.x * num)
+      var num = Math.floor(this.props.origin.x / this.state.stride.x)
+      var offset = this.props.origin.x - (this.state.stride.x * num)
 
       for (var i = offset; i < this.state.width; i += this.state.stride.x) {
         ctx.beginPath()
@@ -77,8 +78,8 @@ export default class Grid extends Component {
 
     // draw gridlines on y
     {
-      var num = Math.floor(this.state.origin.y / this.state.stride.y)
-      var offset = this.state.origin.y - (this.state.stride.y * num)
+      var num = Math.floor(this.props.origin.y / this.state.stride.y)
+      var offset = this.props.origin.y - (this.state.stride.y * num)
 
       for (var i = offset; i < this.state.height; i += this.state.stride.y) {
         ctx.beginPath()
@@ -91,17 +92,11 @@ export default class Grid extends Component {
     // check all units that are inside the current boundaries and draw them
     {
       this.props.units.forEach((unit) => {
-        if (unit.position.x >= this.state.origin.boundaries.lower.x
-          && unit.position.x <= this.state.origin.boundaries.upper.x
-          && unit.position.y >= this.state.origin.boundaries.lower.y
-          && unit.position.y <= this.state.origin.boundaries.upper.y) {
-          if (unit.texture) {
-            this.drawImg(unit.position.x, unit.position.y, unit.texture)
-          }
-          /* else {
-            this.drawVertices(...args)
-          }
-          */
+        if (unit.position.x >= this.props.origin.boundaries.lower.x
+          && unit.position.x <= this.props.origin.boundaries.upper.x
+          && unit.position.y >= this.props.origin.boundaries.lower.y
+          && unit.position.y <= this.props.origin.boundaries.upper.y) {
+          this.drawVertices(unit, unit.texture)
         }
       })
     }
@@ -119,7 +114,7 @@ export default class Grid extends Component {
     // make a cool circle
     {
       ctx.beginPath()
-      ctx.arc(this.state.origin.x, this.state.origin.y, 3, 0, 2 * Math.PI, false)
+      ctx.arc(this.props.origin.x, this.props.origin.y, 3, 0, 2 * Math.PI, false)
       ctx.stroke()
     }
 
@@ -127,10 +122,10 @@ export default class Grid extends Component {
     {
       ctx.fillStyle = '#404040'
       ctx.fillText("mouse pos: " + this.state.oldMouse.x + ", " + this.state.oldMouse.y, 10, 10)
-      ctx.fillText("origin: " + this.state.origin.x + ", " + this.state.origin.y, 10, 25)
+      ctx.fillText("origin: " + this.props.origin.x + ", " + this.props.origin.y, 10, 25)
       ctx.fillText("selected grid element: " + this.state.selectedGrid.x + ", " + this.state.selectedGrid.y, 10, 40)
-      ctx.fillText("lower grid boundary: " + this.state.origin.boundaries.lower.x + ", " + this.state.origin.boundaries.lower.y, 10, 55)
-      ctx.fillText("upper grid boundary: " + this.state.origin.boundaries.upper.x + ", " + this.state.origin.boundaries.upper.y, 10, 70)
+      ctx.fillText("lower grid boundary: " + this.props.origin.boundaries.lower.x + ", " + this.props.origin.boundaries.lower.y, 10, 55)
+      ctx.fillText("upper grid boundary: " + this.props.origin.boundaries.upper.x + ", " + this.props.origin.boundaries.upper.y, 10, 70)
     }
   }
 
@@ -155,8 +150,8 @@ export default class Grid extends Component {
     const ctx = this.refs.canvas.getContext('2d')
     ctx.fillStyle = color
 
-    var x = tileX * this.state.stride.x + this.state.origin.x
-    var y = tileY * this.state.stride.y + this.state.origin.y
+    var x = tileX * this.state.stride.x + this.props.origin.x
+    var y = tileY * this.state.stride.y + this.props.origin.y
 
     ctx.fillRect(x, y, this.state.stride.x, this.state.stride.y)
   }
@@ -164,8 +159,8 @@ export default class Grid extends Component {
   drawImg (tileX, tileY, src) {
     const ctx = this.refs.canvas.getContext('2d')
 
-    var x = tileX * this.state.stride.x + this.state.origin.x
-    var y = tileY * this.state.stride.y + this.state.origin.y
+    var x = tileX * this.state.stride.x + this.props.origin.x
+    var y = tileY * this.state.stride.y + this.props.origin.y
 
     var drawing = new Image()
     drawing.src = src
@@ -180,11 +175,18 @@ export default class Grid extends Component {
     ctx.drawImage(drawing, x + xoffset, y + yoffset, width * factor, height * factor)
   }
 
+  drawVertices (unit, src) {
+    this.drawImg(unit.position.x, unit.position.y, src)
+    unit.vertices.forEach((position) => {
+      this.drawImg(unit.position.x + position.x, unit.position.y + position.y, src)
+    })
+  }
+
   onClick = (e) => {
-    var mousePosRelativeToOriginX = e.pageX - this.state.origin.x
+    var mousePosRelativeToOriginX = e.pageX - this.props.origin.x
     var gridX = Math.floor(mousePosRelativeToOriginX / this.state.stride.x)
 
-    var mousePosRelativeToOriginY = e.pageY - this.state.origin.y
+    var mousePosRelativeToOriginY = e.pageY - this.props.origin.y
     var gridY = Math.floor(mousePosRelativeToOriginY / this.state.stride.y)
 
     this.setState({
@@ -227,33 +229,33 @@ export default class Grid extends Component {
         y: e.pageY - this.state.oldMouse.y
       }
 
-      var lowerBoundaryX = Math.floor((this.state.origin.x * -1) / this.state.stride.x)
-      var lowerBoundaryY = Math.floor((this.state.origin.y * -1) / this.state.stride.y)
+      var lowerBoundaryX = Math.floor((this.props.origin.x * -1) / this.state.stride.x)
+      var lowerBoundaryY = Math.floor((this.props.origin.y * -1) / this.state.stride.y)
 
-      var upperBoundaryX = Math.floor(((this.state.origin.x * -1) + this.state.width) / this.state.stride.x)
-      var upperBoundaryY = Math.floor(((this.state.origin.y * -1) + this.state.height) / this.state.stride.y)
+      var upperBoundaryX = Math.floor(((this.props.origin.x * -1) + this.state.width) / this.state.stride.x)
+      var upperBoundaryY = Math.floor(((this.props.origin.y * -1) + this.state.height) / this.state.stride.y)
 
       this.setState({
         oldMouse: {
           x: e.pageX,
           y: e.pageY
-        },
-        origin: {
-          x: this.state.origin.x + relative.x,
-          y: this.state.origin.y + relative.y,
-          boundaries: {
-            lower: {
-              x: lowerBoundaryX,
-              y: lowerBoundaryY
-            },
-            upper: {
-              x: upperBoundaryX,
-              y: upperBoundaryY
-            }
+        }
+      })
+
+      this.props.onSetOrigin({
+        x: this.props.origin.x + relative.x,
+        y: this.props.origin.y + relative.y,
+        boundaries: {
+          lower: {
+            x: lowerBoundaryX,
+            y: lowerBoundaryY
+          },
+          upper: {
+            x: upperBoundaryX,
+            y: upperBoundaryY
           }
         }
       })
-      this.props.onSetOrigin(this.state.origin)
     }
   }
 

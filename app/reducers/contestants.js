@@ -4,7 +4,7 @@ const contestant = (state = {}, action) => {
   switch (action.type) {
     case ADD_CONTESTANT:
       return {
-        name: action.name
+        name: action.payload.payload.name
       }
 
     default:

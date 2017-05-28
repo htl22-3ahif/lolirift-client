@@ -1,9 +1,9 @@
-import { SET_WS, UNSET_WS } from '../actions/wsActions.js'
+import { SET_WS, UNSET_WS } from '../actions'
 
 const ws = (state = null, action) => {
   switch (action.type) {
     case SET_WS:
-      return action.ws
+      return action.payload.ws
 
     case UNSET_WS:
       return null

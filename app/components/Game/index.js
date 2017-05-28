@@ -1,7 +1,9 @@
 import React, { Component, PropTypes } from 'react'
 
+import { blueGrey900, grey700 } from 'material-ui/styles/colors'
 import { red500, green500 } from 'material-ui/styles/colors'
 
+import Navigation from '../Navigation'
 import Grid from './Grid'
 import Map from './Map'
 
@@ -14,7 +16,8 @@ export default class Game extends Component {
 
     units: PropTypes.arrayOf(
       PropTypes.shape({
-        name: PropTypes.string.isRequired,
+        owner: PropTypes.string.isRequired,
+        type: PropTypes.string.isRequired,
         texture: PropTypes.string.isRequired,
         position: PropTypes.shape({
           x: PropTypes.number.isRequired,
@@ -26,8 +29,8 @@ export default class Game extends Component {
 
   state = {
     origin: {
-      x: 0,
-      y: 0,
+      x: window.innerWidth / 2,
+      y: window.innerHeight / 2,
       boundaries: {
         lower: {
           x: 0,
@@ -50,9 +53,11 @@ export default class Game extends Component {
   render () {
     return (
       <div>
+        <Navigation color={blueGrey900} hoverColor={grey700} />
         <Grid
           units={this.props.units}
           onSetOrigin={this.onSetOrigin.bind(this)}
+          origin={this.state.origin}
         />
         <Map
           units={this.props.units}

@@ -19,11 +19,7 @@ export default class Map extends Component {
       width: size,
       height: size,
       canvas: { width: size, height: size * 0.7 },
-      move: false,
-      scale: {
-        x: size / window.innerWidth,
-        y: (size * 0.7) / window.innerHeight
-      }
+      move: false
     }
 
     window.addEventListener('resize', this.onResize.bind(this))
@@ -75,8 +71,11 @@ export default class Map extends Component {
             var color = this.props.anyUnitColor
           }
 
-          var unitX = (unit.position.x * pixelX + this.props.origin.x) * this.state.scale.x
-          var unitY = (unit.position.y * pixelY + this.props.origin.y) * this.state.scale.y
+          var scaleX = (this.state.canvas.width / window.innerWidth)
+          var scaleY = (this.state.canvas.height / window.innerHeight)
+
+          var unitX = (unit.position.x * pixelX + this.props.origin.x) * scaleX
+          var unitY = (unit.position.y * pixelY + this.props.origin.y) * scaleY
 
           /* abandoned
           TODO: implement an extended view range on map (bigger than ingame view)
@@ -95,7 +94,7 @@ export default class Map extends Component {
           */
 
           console.log(unit.name, unit.position.x, unit.position.y, pixelX, pixelY)
-          this.drawTile(unit.position.x, unit.position.y, pixelX, pixelY, color)
+          this.drawVertices(unit, pixelX, pixelY, scaleX, scaleY, color)
         }
       })
     }
@@ -113,14 +112,21 @@ export default class Map extends Component {
     }
   }
 
-  drawTile (tileX, tileY, strideX, strideY, color = '#404040') {
+  drawTile (tileX, tileY, strideX, strideY, scaleX, scaleY, color = '#404040') {
     const ctx = this.refs.canvas.getContext('2d')
     ctx.fillStyle = color
 
-    var x = (tileX * strideX) + (this.props.origin.x * this.state.scale.x)
-    var y = (tileY * strideY) + (this.props.origin.y * this.state.scale.y)
+    var x = (tileX * strideX) + (this.props.origin.x * scaleX)
+    var y = (tileY * strideY) + (this.props.origin.y * scaleY)
 
     ctx.fillRect(x, y, strideX, strideY)
+  }
+
+  drawVertices (unit, pixelX, pixelY, scaleX, scaleY, color = '#404040') {
+    this.drawTile(unit.position.x, unit.position.y, pixelX, pixelY, scaleX, scaleY, color)
+    unit.vertices.forEach((position) => {
+      this.drawTile(unit.position.x + position.x, unit.position.y + position.y, pixelX, pixelY, scaleX, scaleY, color)
+    })
   }
 
   getCardStyles () {
@@ -177,8 +183,8 @@ export default class Map extends Component {
   }
 
   render () {
-    console.log('rendering map');
-    console.log(this.props);
+    console.log('rendering map')
+    console.log(this.props)
     var cardStyles = this.getCardStyles()
     var cardHeaderStyles = this.getCardHeaderStyles()
     var canvasStyles = this.getCanvasStyles()

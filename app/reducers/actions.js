@@ -4,8 +4,8 @@ const action = (state = {}, action) => {
   switch (action.type) {
     case ADD_ACTION:
       return {
-        name: action.name,
-        paramTypes: action.paramTypes
+        name: action.payload.name,
+        paramTypes: action.payload.paramTypes
       }
 
     default:
