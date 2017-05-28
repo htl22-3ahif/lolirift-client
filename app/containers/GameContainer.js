@@ -7,7 +7,8 @@ const mapStateToProps = (state) => {
   return {
     units: state.units,
     player: state.player,
-    origin: state.origin
+    origin: state.origin,
+    actions: state.actions
   }
 }
 

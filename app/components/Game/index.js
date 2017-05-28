@@ -27,7 +27,8 @@ export default class Game extends Component {
     actions: PropTypes.arrayOf(
       PropTypes.shape({
         name: PropTypes.string.isRequired,
-        paramTypes: PropTypes.object.isRequired
+        paramTypes: PropTypes.object.isRequired,
+        svg: PropTypes.string.isRequired
       }).isRequired
     ).isRequired
   }

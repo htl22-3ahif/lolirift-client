@@ -1,3 +1,5 @@
+const fs = require('fs')
+
 export const SET_PLAYER = 'SET_PLAYER'
 export const setPlayer = (name, pass) => {
   return {
@@ -35,10 +37,15 @@ export const addUnit = (id, owner, position, vertices, stats, actions, name) => 
 
 export const ADD_ACTION = 'ADD_ACTION'
 export const addAction = (name, paramTypes) => {
+  var svg = 'resources/actions/' + name + '.svg'
+  if (!fs.existsSync(svg))
+    svg = 'resources/actions/default.svg'
+
   return {
     type: ADD_ACTION,
     name,
-    paramTypes
+    paramTypes,
+    svg
   }
 }
 

@@ -48,6 +48,7 @@ export default class Login extends Component {
       })
 
       json.actions.forEach((a) => {
+        console.log('adding action')
         this.props.onAddAction(a.name, a.paramTypes)
       })
     })

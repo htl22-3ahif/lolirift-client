@@ -5,7 +5,8 @@ const action = (state = {}, action) => {
     case ADD_ACTION:
       return {
         name: action.name,
-        paramTypes: action.paramTypes
+        paramTypes: action.paramTypes,
+        svg: action.svg
       }
 
     default:
@@ -14,7 +15,7 @@ const action = (state = {}, action) => {
 }
 
 const actions = (state = [], a) => {
-  switch (action.type) {
+  switch (a.type) {
     case ADD_ACTION:
       return [
         ...state,
