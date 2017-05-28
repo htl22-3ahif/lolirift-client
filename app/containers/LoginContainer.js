@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { setPlayer, setWs, addUnit, unsetWs } from '../actions'
+import { setPlayer, addUnit, addAction, unsetWs, setWs } from '../actions'
 
 import Login from '../components/Login'
 
@@ -14,6 +14,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     onAddUnit: (id, owner, position, vertices, stats, actions, name) => {
       dispatch(addUnit(id, owner, position, vertices, stats, actions, name))
+    },
+    onAddAction: (name, paramTypes) => {
+      dispatch(addAction(name, paramTypes))
     },
     onSetWs: (ws) => {
       dispatch(setWs(ws))

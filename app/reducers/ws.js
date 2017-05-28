@@ -6,7 +6,7 @@ const ws = (state = null, action) => {
       return action.ws
 
     case UNSET_WS:
-      return undefined
+      return null
 
     default:
       return state

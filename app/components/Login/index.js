@@ -28,15 +28,28 @@ export default class Login extends Component {
       console.log('message: ' + data)
 
       var json = JSON.parse(data)
-      this.props.onAddUnit(
-        json.id,
-        json.owner,
-        json.position,
-        json.vertices,
-        json.stats,
-        json.actions,
-        'youmu'
-      )
+
+      if (json.hasOwnProperty('error')) {
+        console.error('error occured while processing incoming websocket messages')
+        console.error('error message form server: ' + json.error)
+        return
+      }
+
+      json.units.forEach((u) => {
+        this.props.onAddUnit(
+          u.id,
+          u.owner,
+          u.position,
+          u.vertices,
+          u.stats,
+          u.actions,
+          'youmu'
+        )
+      })
+
+      json.actions.forEach((a) => {
+        this.props.onAddAction(a.name, a.paramTypes)
+      })
     })
 
     ws.on('error', (e) => {
@@ -44,6 +57,10 @@ export default class Login extends Component {
       // NOTE: probably because endpoint does not have a lolirift server
       // TODO: tell user that he has to try antother endpoint
 
+      this.props.onUnsetWs()
+    })
+
+    ws.on('close', () => {
       this.props.onUnsetWs()
     })
   }

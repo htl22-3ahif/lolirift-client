@@ -33,6 +33,15 @@ export const addUnit = (id, owner, position, vertices, stats, actions, name) => 
   }
 }
 
+export const ADD_ACTION = 'ADD_ACTION'
+export const addAction = (name, paramTypes) => {
+  return {
+    type: ADD_ACTION,
+    name,
+    paramTypes
+  }
+}
+
 export const SET_WS = 'SET_WS'
 export const setWs = (ws) => {
   return {

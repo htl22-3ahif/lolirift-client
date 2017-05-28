@@ -1,11 +1,9 @@
 import { ADD_UNIT } from '../actions'
-import players from './player'
 
 const unit = (state = {}, action) => {
   switch (action.type) {
     case ADD_UNIT:
       return {
-        type: ADD_UNIT,
         id: action.id,
         owner: action.owner,
         position: action.position,
