@@ -88,6 +88,13 @@ export default class Grid extends Component {
       })
     }
 
+    // draw a border aroudn a single selected unit
+    {
+      if (this.props.selection.length === 1) {
+        this.drawBorder(this.props.selection[0])
+      }
+    }
+
     /*
     this.drawTile(this.state.selectedGrid.x, this.state.selectedGrid.y, '#0080ff')
     this.drawImg(this.state.selectedGrid.x + 2, this.state.selectedGrid.y, 'resources/yuyuko.png')
@@ -169,8 +176,13 @@ export default class Grid extends Component {
     })
   }
 
-  drawBorder (id, thickness = 6, color = '#404040') {
+  drawBorder (id, thickness = 6, color = '#546e7a') {
     const ctx = this.refs.canvas.getContext('2d')
+    ctx.beginPath()
+
+    var oldLineWidth = ctx.lineWidth
+    var oldColor = ctx.strokeStyle
+
     ctx.lineWidth = thickness
     ctx.strokeStyle = color
 
@@ -178,14 +190,14 @@ export default class Grid extends Component {
       return unit.id === id
     })
 
-    console.log('drawBorder AAAAAAAAAAAAAAAAA')
-    console.log(unit)
-
     var x = unit.position.x * this.state.stride.x + this.props.origin.x
     var y = unit.position.y * this.state.stride.y + this.props.origin.y
 
-    ctx.rect(x - thickness,y - thickness, this.state.stride.x + thickness, this.state.stride.y + thickness)
+    ctx.rect(x - (thickness / 2), y - (thickness / 2), this.state.stride.x + thickness, this.state.stride.y + thickness)
     ctx.stroke()
+
+    ctx.lineWidth = oldLineWidth
+    ctx.strokeStyle = oldColor
   }
 
   onClick = (e) => {
@@ -210,10 +222,6 @@ export default class Grid extends Component {
       }
     })
     this.props.onSetSelection(selectedUnits)
-
-    if (selectedUnits.length === 1) {
-      this.drawBorder(selectedUnits[0])
-    }
   }
 
   onDoubleClick = (e) => {

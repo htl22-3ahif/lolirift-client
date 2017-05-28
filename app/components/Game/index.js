@@ -52,8 +52,6 @@ export default class Game extends Component {
   }
 
   onSetSelection = (selection) => {
-    console.log('SELECTION AAAAAA')
-    console.log(selection)
     this.setState({
       selection
     })
