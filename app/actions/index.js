@@ -1,3 +1,5 @@
+// action creators here
+
 export const SET_PLAYER = 'SET_PLAYER'
 export const setPlayer = (name, pass) => {
   return {

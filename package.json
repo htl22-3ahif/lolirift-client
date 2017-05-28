@@ -1,7 +1,7 @@
 {
-  "name": "electron-quick-start",
+  "name": "lolirift-client",
   "version": "1.0.0",
-  "description": "A minimal Electron application",
+  "description": "a client electron app for the soon-to-be hit lolirift",
   "main": "main.js",
   "scripts": {
     "start": "babel app -d build && electron .",
