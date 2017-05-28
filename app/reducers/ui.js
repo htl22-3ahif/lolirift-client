@@ -1,4 +1,4 @@
-import { CHANGE_ORIGIN, CHANGE_SELECTION } from '../actions/uiActions.js'
+import { CHANGE_ORIGIN, CHANGE_SELECTION } from '../actions'
 
 const initialOrigin = {
   x: 0,

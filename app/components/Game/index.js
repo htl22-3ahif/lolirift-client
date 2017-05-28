@@ -16,7 +16,8 @@ export default class Game extends Component {
 
     units: PropTypes.arrayOf(
       PropTypes.shape({
-        name: PropTypes.string.isRequired,
+        owner: PropTypes.string.isRequired,
+        type: PropTypes.string.isRequired,
         texture: PropTypes.string.isRequired,
         position: PropTypes.shape({
           x: PropTypes.number.isRequired,

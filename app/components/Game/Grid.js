@@ -7,7 +7,8 @@ export default class Grid extends Component {
   static propTypes = {
     units: PropTypes.arrayOf(
       PropTypes.shape({
-        name: PropTypes.string.isRequired,
+        owner: PropTypes.string.isRequired,
+        type: PropTypes.string.isRequired,
         texture: PropTypes.string.isRequired,
         position: PropTypes.shape({
           x: PropTypes.number.isRequired,
