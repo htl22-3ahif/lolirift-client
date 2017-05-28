@@ -56,7 +56,13 @@ export default class Game extends Component {
     })
   }
 
+  onActionClick = (action) => {
+    var json = { unit: 0, action }
+    this.props.ws.send(JSON.stringify(json))
+  }
+
   render () {
+    console.log(this.props.ws)
     return (
       <div>
         <Grid
@@ -72,6 +78,7 @@ export default class Game extends Component {
         />
         <Actions
           actions={this.props.actions}
+          onClick={this.onActionClick.bind(this)}
         />
       </div>
     )

@@ -1,4 +1,4 @@
-import { SET_WS, UNSET_WS } from '../actions/wsActions.js'
+import { SET_WS, UNSET_WS } from '../actions'
 
 const ws = (state = null, action) => {
   switch (action.type) {

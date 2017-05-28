@@ -37,7 +37,8 @@ export const addUnit = (id, owner, position, vertices, stats, actions, name) => 
 
 export const ADD_ACTION = 'ADD_ACTION'
 export const addAction = (name, paramTypes) => {
-  var svg = 'resources/actions/' + name + '.svg'
+  var modifiedName = name.indexOf(':') < 0 ? name : name.substring(0, name.indexOf(':'))
+  var svg = 'resources/actions/' + modifiedName + '.svg'
   if (!fs.existsSync(svg))
     svg = 'resources/actions/default.svg'
 

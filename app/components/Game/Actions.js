@@ -13,12 +13,16 @@ export default class Map extends Component {
         paramTypes: PropTypes.object.isRequired,
         svg: PropTypes.string.isRequired
       }).isRequired
-    ).isRequired
+    ).isRequired,
+
+    onClick: PropTypes.func
   }
 
   state = {
     width: window.innerHeight / (600 / 190.98609),
-    height: window.innerHeight / (600 / 190.98609)
+    height: window.innerHeight / (600 / 190.98609),
+    clicked: "",
+    hovered: ""
   }
 
   constructor () {
@@ -43,13 +47,43 @@ export default class Map extends Component {
     }
   }
 
-  getPaperStyles () {
+  getPaperStyles (id) {
+    var boxShadow = '0px 1px 6px rgba(0, 0, 0, 0.12), 0px 1px 4px rgba(0, 0, 0, 0.12)'
+    if (this.state.hovered === id)
+      boxShadow = '0px 10px 30px rgba(0, 0, 0, 0.19), 0px 6px 10px rgba(0, 0, 0, 0.23)'
+
     return {
       width: this.state.width / 4 - 10,
       height: this.state.height / 4 - 10,
       margin: 5,
-      float: 'left'
+      padding: 0,
+      float: 'left',
+      borderRaidus: 5,
+
+      boxShadow,
+      transition: 'all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms'
     }
+  }
+
+  onMouseOver = (e) => {
+    if (e.target !== e.currentTarget) {
+      this.setState({ hovered: e.target.id })
+    }
+    e.stopPropagation()
+  }
+
+  onMouseOut = (e) => {
+    if (e.target.id === this.state.hovered) {
+      this.setState({ hovered: "" })
+    }
+    e.stopPropagation()
+  }
+
+  onClick = (e) => {
+    if (e.target !== e.currentTarget) {
+      this.props.onClick(e.target.id)
+    }
+    e.stopPropagation()
   }
 
   onResize = (e) => {
@@ -60,25 +94,28 @@ export default class Map extends Component {
     })
   }
 
-  render () {
+  render (e) {
     var cardStyles = this.getCardStyles()
     var cardTextStyles = this.getCardTextStyles()
-    var paperStyles = this.getPaperStyles()
 
     var actionButtons = []
-    console.log('actions length: ' + this.props.actions.length)
     this.props.actions.forEach((a) => {
-      console.log('hai')
+      var paperStyles = this.getPaperStyles(a.name)
       actionButtons.push(
-        <Paper style={paperStyles} zDepth={1}>
-          <img style={{width:'100%',height:'100%'}} src={a.svg} />
-        </Paper>
+        <div style={paperStyles}>
+          <img id={a.name} style={{width:'100%',height:'100%'}} src={a.svg} />
+        </div>
       )
     })
 
     return (
       <div>
-        <Card style={cardStyles}>
+        <Card
+          style={cardStyles}
+          onClick={this.onClick.bind(this)}
+          onMouseOver={this.onMouseOver.bind(this)}
+          onMouseOut={this.onMouseOut.bind(this)}
+        >
           { actionButtons }
         </Card>
       </div>
