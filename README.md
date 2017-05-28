@@ -2,7 +2,9 @@
 
 ## Prove your waifu is superior!
 
-The lolirift-client offeers a way for users to connect to a [lolirift-server](https://github.com/htl22-3ahif/lolirift-server) host, and enjoy a lolified take on real time strategy games.
+You play a lolicon in a world full of lolis, but there is a problem: there are other lolicons too! To have all lolis on your side your goal is to defeat the other lolicons. How you do it is up to you.
+
+The lolirift-client offers a way for users to connect to a [lolirift-server](https://github.com/htl22-3ahif/lolirift-server) host, and enjoy a lolified take on real time strategy games.
 
 ## Getting Started
 
