@@ -2,7 +2,7 @@
 
 ## Prove your waifu is superior!
 
-The lolirift-client offeers a way for users to connect to a [lolirift-server](https://github.com/UgiNyaa/lolirift-server) host, and enjoy a lolified take on real time strategy games.
+The lolirift-client offeers a way for users to connect to a [lolirift-server](https://github.com/htl22-3ahif/lolirift-server) host, and enjoy a lolified take on real time strategy games.
 
 ## Getting Started
 
@@ -21,7 +21,7 @@ it's that easy!
 
 ### additional steps for hosting a local server
 
-- clone the git repository for the client https://github.com/htl22-3ahif/lolirift-client.git
+- clone the git repository for the server https://github.com/htl22-3ahif/lolirift-server
 - cd into the repository
 - execute `npm install` to install
 - execute `npm start` to start
