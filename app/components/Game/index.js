@@ -29,8 +29,8 @@ export default class Game extends Component {
 
   state = {
     origin: {
-      x: 0,
-      y: 0,
+      x: window.innerWidth / 2,
+      y: window.innerHeight / 2,
       boundaries: {
         lower: {
           x: 0,
@@ -57,6 +57,7 @@ export default class Game extends Component {
         <Grid
           units={this.props.units}
           onSetOrigin={this.onSetOrigin.bind(this)}
+          origin={this.state.origin}
         />
         <Map
           units={this.props.units}
