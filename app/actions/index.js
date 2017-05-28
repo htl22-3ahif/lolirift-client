@@ -68,34 +68,3 @@ export const unsetWs = () => {
     type: UNSET_WS
   }
 }
-
-export const CHANGE_ORIGIN = 'CHANGE_ORIGIN'
-export const changeOrigin = (x, y, lowerBoundaryX, lowerBoundaryY, upperBoundaryX, upperBoundaryY) => {
-  return {
-    type: CHANGE_ORIGIN,
-    payload: {
-      x,
-      y,
-      boundaries: {
-        lower: {
-          x: lowerBoundaryX,
-          y: lowerBoundaryY
-        },
-        upper: {
-          x: upperBoundaryX,
-          y: upperBoundaryY
-        }
-      }
-    }
-  }
-}
-
-export const CHANGE_SELECTION = 'CHANGE_SELECTION'
-export const changeSelection = (...selected) => {
-  return {
-    type: CHANGE_ORIGIN,
-    payload: {
-      selected
-    }
-  }
-}

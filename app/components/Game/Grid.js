@@ -26,8 +26,7 @@ export default class Grid extends Component {
       move: false,
       oldMouse: { x: 0, y: 0 },
       stride: { x: 40, y: 40 },
-      selectedGrid: { x: 0, y: 0 },
-      selectedUnit: 0,
+      selectedGrid: { x: 0, y: 0 }
     }
 
     window.addEventListener('resize', this.onResize.bind(this))
@@ -35,6 +34,7 @@ export default class Grid extends Component {
 
   componentDidMount () {
     this.props.onSetOrigin(this.props.origin)
+    this.props.onSetSelection(this.props.origin)
 
     this.updateCanvas()
   }
@@ -85,6 +85,20 @@ export default class Grid extends Component {
           this.drawVertices(unit, unit.texture)
         }
       })
+    }
+
+    // draw a border aroudn a single selected unit
+    {
+      /*if (this.props.selection.length === 1) {
+        var unit = this.props.units.find((unit) => {
+          return unit.id === id
+        })
+        this.drawBorder(this.props.selection[0].position.x, this.props.selection[0].position.y)
+      }*/
+
+
+
+      this.drawBorder(this.state.selectedGrid.x, this.state.selectedGrid.y)
     }
 
     /*
@@ -168,6 +182,26 @@ export default class Grid extends Component {
     })
   }
 
+  drawBorder (tileX, tileY, thickness = ((this.state.stride.x + this.state.stride.y) / 2) * 0.1, color = '#546e7a') {
+    const ctx = this.refs.canvas.getContext('2d')
+    ctx.beginPath()
+
+    var oldLineWidth = ctx.lineWidth
+    var oldColor = ctx.strokeStyle
+
+    ctx.lineWidth = thickness
+    ctx.strokeStyle = color
+
+    var x = tileX * this.state.stride.x + this.props.origin.x
+    var y = tileY * this.state.stride.y + this.props.origin.y
+
+    ctx.rect(x - (thickness / 2), y - (thickness / 2), this.state.stride.x + thickness, this.state.stride.y + thickness)
+    ctx.stroke()
+
+    ctx.lineWidth = oldLineWidth
+    ctx.strokeStyle = oldColor
+  }
+
   onClick = (e) => {
     var mousePosRelativeToOriginX = e.pageX - this.props.origin.x
     var gridX = Math.floor(mousePosRelativeToOriginX / this.state.stride.x)
@@ -182,14 +216,14 @@ export default class Grid extends Component {
       }
     })
 
+    var selectedUnits = []
     this.props.units.forEach((unit) => {
       if (unit.position.x == this.state.selectedGrid.x
         && unit.position.y == this.state.selectedGrid.y) {
-        this.setState({
-          selectedUnit: unit.id
-        })
+        selectedUnits.push(unit.id)
       }
     })
+    this.props.onSetSelection(selectedUnits)
   }
 
   onDoubleClick = (e) => {

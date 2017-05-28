@@ -41,12 +41,19 @@ export default class Game extends Component {
           y: 0,
         }
       }
-    }
+    },
+    selection: []
   }
 
   onSetOrigin = (origin) => {
     this.setState({
       origin
+    })
+  }
+
+  onSetSelection = (selection) => {
+    this.setState({
+      selection
     })
   }
 
@@ -57,7 +64,9 @@ export default class Game extends Component {
         <Grid
           units={this.props.units}
           onSetOrigin={this.onSetOrigin.bind(this)}
+          onSetSelection={this.onSetSelection.bind(this)}
           origin={this.state.origin}
+          selection={this.state.selection}
         />
         <Map
           units={this.props.units}
