@@ -28,20 +28,6 @@ export default class Grid extends Component {
       stride: { x: 40, y: 40 },
       selectedGrid: { x: 0, y: 0 },
       selectedUnit: 0,
-      origin: {
-        x: window.innerWidth / 2,
-        y: window.innerHeight / 2,
-        boundaries: {
-          lower: {
-            x: 0,
-            y: 0
-          },
-          upper: {
-            x: 0,
-            y: 0
-          }
-        }
-      }
     }
 
     window.addEventListener('resize', this.onResize.bind(this))

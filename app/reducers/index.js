@@ -1,3 +1,5 @@
+// combine all reducers for the world to modify the redux state here
+
 import { combineReducers } from 'redux'
 import { origin, selection } from './ui'
 import player from './player'
