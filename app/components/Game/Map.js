@@ -93,7 +93,7 @@ export default class Map extends Component {
           unitY += (((verticalRange - verticalOriginRange) / 2) * scaleRangeY)
           */
 
-          console.log(unit.name, unit.position.x, unit.position.y, pixelX, pixelY)
+          console.log(unit.type, unit.position.x, unit.position.y, pixelX, pixelY)
           this.drawVertices(unit, pixelX, pixelY, scaleX, scaleY, color)
         }
       })

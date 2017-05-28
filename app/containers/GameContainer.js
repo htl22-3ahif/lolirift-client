@@ -1,13 +1,11 @@
 import { connect } from 'react-redux'
-import { addUnit } from '../actions'
 
 import Game from '../components/Game'
 
 const mapStateToProps = (state) => {
   return {
     units: state.units,
-    player: state.player,
-    origin: state.origin
+    player: state.player
   }
 }
 

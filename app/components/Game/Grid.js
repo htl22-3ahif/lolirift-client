@@ -35,6 +35,7 @@ export default class Grid extends Component {
 
   componentDidMount () {
     this.props.onSetOrigin(this.props.origin)
+    this.props.onSetSelection(this.props.origin)
 
     this.updateCanvas()
   }
@@ -168,6 +169,25 @@ export default class Grid extends Component {
     })
   }
 
+  drawBorder (id, thickness = 6, color = '#404040') {
+    const ctx = this.refs.canvas.getContext('2d')
+    ctx.lineWidth = thickness
+    ctx.strokeStyle = color
+
+    var unit = this.props.units.find((unit) => {
+      return unit.id === id
+    })
+
+    console.log('drawBorder AAAAAAAAAAAAAAAAA')
+    console.log(unit)
+
+    var x = unit.position.x * this.state.stride.x + this.props.origin.x
+    var y = unit.position.y * this.state.stride.y + this.props.origin.y
+
+    ctx.rect(x - thickness,y - thickness, this.state.stride.x + thickness, this.state.stride.y + thickness)
+    ctx.stroke()
+  }
+
   onClick = (e) => {
     var mousePosRelativeToOriginX = e.pageX - this.props.origin.x
     var gridX = Math.floor(mousePosRelativeToOriginX / this.state.stride.x)
@@ -182,14 +202,18 @@ export default class Grid extends Component {
       }
     })
 
+    var selectedUnits = []
     this.props.units.forEach((unit) => {
       if (unit.position.x == this.state.selectedGrid.x
         && unit.position.y == this.state.selectedGrid.y) {
-        this.setState({
-          selectedUnit: unit.id
-        })
+        selectedUnits.push(unit.id)
       }
     })
+    this.props.onSetSelection(selectedUnits)
+
+    if (selectedUnits.length === 1) {
+      this.drawBorder(selectedUnits[0])
+    }
   }
 
   onDoubleClick = (e) => {
