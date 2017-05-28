@@ -26,8 +26,7 @@ export default class Grid extends Component {
       move: false,
       oldMouse: { x: 0, y: 0 },
       stride: { x: 40, y: 40 },
-      selectedGrid: { x: 0, y: 0 },
-      selectedUnit: 0,
+      selectedGrid: { x: 0, y: 0 }
     }
 
     window.addEventListener('resize', this.onResize.bind(this))
@@ -90,9 +89,16 @@ export default class Grid extends Component {
 
     // draw a border aroudn a single selected unit
     {
-      if (this.props.selection.length === 1) {
-        this.drawBorder(this.props.selection[0])
-      }
+      /*if (this.props.selection.length === 1) {
+        var unit = this.props.units.find((unit) => {
+          return unit.id === id
+        })
+        this.drawBorder(this.props.selection[0].position.x, this.props.selection[0].position.y)
+      }*/
+
+
+
+      this.drawBorder(this.state.selectedGrid.x, this.state.selectedGrid.y)
     }
 
     /*
@@ -176,7 +182,7 @@ export default class Grid extends Component {
     })
   }
 
-  drawBorder (id, thickness = 6, color = '#546e7a') {
+  drawBorder (tileX, tileY, thickness = ((this.state.stride.x + this.state.stride.y) / 2) * 0.1, color = '#546e7a') {
     const ctx = this.refs.canvas.getContext('2d')
     ctx.beginPath()
 
@@ -186,12 +192,8 @@ export default class Grid extends Component {
     ctx.lineWidth = thickness
     ctx.strokeStyle = color
 
-    var unit = this.props.units.find((unit) => {
-      return unit.id === id
-    })
-
-    var x = unit.position.x * this.state.stride.x + this.props.origin.x
-    var y = unit.position.y * this.state.stride.y + this.props.origin.y
+    var x = tileX * this.state.stride.x + this.props.origin.x
+    var y = tileY * this.state.stride.y + this.props.origin.y
 
     ctx.rect(x - (thickness / 2), y - (thickness / 2), this.state.stride.x + thickness, this.state.stride.y + thickness)
     ctx.stroke()
