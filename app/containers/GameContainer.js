@@ -5,7 +5,10 @@ import Game from '../components/Game'
 const mapStateToProps = (state) => {
   return {
     units: state.units,
-    player: state.player
+    player: state.player,
+    origin: state.origin,
+    actions: state.actions,
+    ws: state.ws
   }
 }
 

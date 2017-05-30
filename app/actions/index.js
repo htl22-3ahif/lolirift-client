@@ -1,4 +1,5 @@
 // action creators here
+const fs = require('fs')
 
 export const SET_PLAYER = 'SET_PLAYER'
 export const setPlayer = (name, pass) => {
@@ -43,11 +44,17 @@ export const addUnit = (id, owner, type, position, vertices, stats, actions) => 
 
 export const ADD_ACTION = 'ADD_ACTION'
 export const addAction = (name, paramTypes) => {
+  var modifiedName = name.indexOf(':') < 0 ? name : name.substring(0, name.indexOf(':'))
+  var svg = 'resources/actions/' + modifiedName + '.svg'
+  if (!fs.existsSync(svg))
+    svg = 'resources/actions/default.svg'
+
   return {
     type: ADD_ACTION,
     payload: {
       name,
-      paramTypes
+      paramTypes,
+      svg
     }
   }
 }

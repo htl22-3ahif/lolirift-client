@@ -6,6 +6,7 @@ import { red500, green500 } from 'material-ui/styles/colors'
 import Navigation from '../Navigation'
 import Grid from './Grid'
 import Map from './Map'
+import Actions from './Actions'
 
 export default class Game extends Component {
 
@@ -24,6 +25,14 @@ export default class Game extends Component {
           y: PropTypes.number.isRequired
         }).isRequired
       })
+    ).isRequired,
+
+    actions: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        paramTypes: PropTypes.object.isRequired,
+        svg: PropTypes.string.isRequired
+      }).isRequired
     ).isRequired
   }
 
@@ -57,7 +66,13 @@ export default class Game extends Component {
     })
   }
 
+  onActionClick = (action) => {
+    var json = { unit: 0, action }
+    this.props.ws.send(JSON.stringify(json))
+  }
+
   render () {
+    console.log(this.props.ws)
     return (
       <div>
         <Navigation color={blueGrey900} hoverColor={grey700} />
@@ -74,6 +89,10 @@ export default class Game extends Component {
           origin={this.state.origin}
           friendlyUnitColor={red500}
           anyUnitColor={green500}
+        />
+        <Actions
+          actions={this.props.actions}
+          onClick={this.onActionClick.bind(this)}
         />
       </div>
     )
